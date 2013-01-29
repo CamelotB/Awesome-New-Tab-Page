@@ -45,6 +45,7 @@
 
   var options_init = true;
   $("#config-button, .ui-2.config").live("click", function(){
+    $(window).trigger("antp-config");
     _gaq.push([ '_trackEvent', 'Window', "Config" ]);
     closeButton(".ui-2#config");
     $(".ui-2#config").toggle();
@@ -179,7 +180,6 @@
 
   /* END :: Top Left Buttons */
 
-
 /* START :: Configure */
 
   $(document).ready(function($) {
@@ -273,6 +273,31 @@
 
   /* END :: Configure */
 
+/* START :: Hide Scrollbar */
+
+  var hideScrollbarOptionsInit = false;
+  $(window).bind("antp-config", function() {
+    var hideScrollbar = $("#hide-scrollbar");
+    hideScrollbar.attr("checked", store.get("hideScrollbar"));
+
+    if ( hideScrollbarOptionsInit === false ) {
+      hideScrollbar.on("change", function() {
+        store.set("hideScrollbar", $("#hide-scrollbar").is(":checked"));
+        hideScrollBar();
+      });
+    }
+  });
+
+  function hideScrollBar() {
+    if (store.get("hideScrollbar")) {
+      $("body").css("overflow-x", "hidden");
+    } else {
+      $("body").css("overflow-x", "");
+    }
+  }
+  hideScrollBar();
+
+  /* END :: Hide Scrollbar */
 
 function colorPickerLoaded() {
   // background color picker

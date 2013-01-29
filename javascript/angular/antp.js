@@ -611,7 +611,7 @@ var
           });
           pane.selected = true;
 
-          if(pane.selected === true && pane.name === "Background") {
+          if(pane.selected === true && pane.name === chrome.i18n.getMessage("ui_config_bg")) {
             $("#icon-resize-scale-controls").show();
           } else {
             $("#icon-resize-scale-controls").hide();
@@ -652,3 +652,27 @@ var
   });
 
   /* END :: Tabs & Panes Directives */
+
+/* START :: Checkbox Directive */
+
+  ajs.directive('onoff', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: { name: '@' },
+      template:
+        '<div class="onoffswitch">' +
+          '<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="{{name}}">' +
+          '<label class="onoffswitch-label" for="{{name}}">' +
+            '<div class="onoffswitch-inner">' +
+              '<div class="onoffswitch-active"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_on") + '</div></div>' +
+              '<div class="onoffswitch-inactive"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_off") + '</div></div>' +
+            '</div>' +
+          '</label>' +
+        '</div>',
+      replace: true
+    };
+  });
+
+  /* END :: Checkbox Directive */
+
