@@ -29,18 +29,44 @@ $(document).bind("onffline", function () {
 });
 /* End: Online/Offline status */
 
+/* START :: Show/Hide Grid */
+
+  var hideGridOptionsInit = false;
+  $(window).bind("antp-config", function() {
+    var hideGrid = $("#toggle-grid");
+    var yesno = localStorage.getItem("perm-grid") === "yes" ? "checked" : "";
+
+    if(localStorage.getItem("perm-grid") === null) {
+      localStorage.setItem("perm-grid", "yes");
+    }
+
+    if(localStorage.getItem("perm-grid") === "yes") {
+      $("body").addClass("perm-grid");
+      hideGrid.attr("checked", yesno);
+    }
+
+    if ( hideGridOptionsInit === false ) {
+      hideGridOptionsInit = true;
+      $(document).on("change", "#toggle-grid", updateGridOpacity);
+    }
+  });
+
+  function updateGridOpacity() {
+    if (localStorage.getItem("perm-grid") === "no") {
+      $("body").addClass("perm-grid");
+      localStorage.setItem("perm-grid", "yes");
+      $(".tile").css({opacity: 0});
+    } else {
+      $("body").removeClass("perm-grid");
+      localStorage.setItem("perm-grid", "no");
+      $(".tile").css({opacity: 0});
+    }
+  }
+
+  /* END :: Show/Hide Grid */
+
+
 $(document).ready(function($) {
-  $("#toggle-grid,#grid-holder").live("click", updateGridOpacity);
-
-  if(localStorage.getItem("perm-grid") === null) {
-    localStorage.setItem("perm-grid", "yes");
-  }
-
-  if(localStorage.getItem("perm-grid") === "yes") {
-    $("body").addClass("perm-grid");
-    $("#toggle-grid,#grid-holder").attr('checked', 'checked');
-  }
-
   placeGrid();
   // placeWidgets();
 });
@@ -56,19 +82,6 @@ var GRID_MIN_HEIGHT     = 3,
     TILE_MAX_WIDTH      = 3,
     TILE_MIN_HEIGHT     = 1,
     TILE_MAX_HEIGHT     = 3;
-
-// Handles permanent grid preference
-function updateGridOpacity() {
-  if ($("#toggle-grid").is(':checked')) {
-    $("body").addClass("perm-grid");
-    localStorage.setItem("perm-grid", "yes");
-    $(".tile").css({opacity: 0});
-  } else {
-    $("body").removeClass("perm-grid");
-    localStorage.setItem("perm-grid", "no");
-    $(".tile").css({opacity: 0});
-  }
-}
 
 // Handles positioning and repositioning the grid
 function moveGrid(pref) {

@@ -281,8 +281,9 @@
     hideScrollbar.attr("checked", store.get("hideScrollbar"));
 
     if ( hideScrollbarOptionsInit === false ) {
+      hideScrollbarOptionsInit = true;
       hideScrollbar.on("change", function() {
-        store.set("hideScrollbar", $("#hide-scrollbar").is(":checked"));
+        store.set("hideScrollbar", hideScrollbar.is(":checked"));
         hideScrollBar();
       });
     }
@@ -298,32 +299,6 @@
   hideScrollBar();
 
   /* END :: Hide Scrollbar */
-
-// /* START :: Show/Hide Bookmark Bar */
-
-//   var hideScrollbarOptionsInit = false;
-//   $(window).bind("antp-config", function() {
-//     var hideScrollbar = $("#hide-scrollbar");
-//     hideScrollbar.attr("checked", store.get("hideScrollbar"));
-
-//     if ( hideScrollbarOptionsInit === false ) {
-//       hideScrollbar.on("change", function() {
-//         store.set("hideScrollbar", $("#hide-scrollbar").is(":checked"));
-//         hideScrollBar();
-//       });
-//     }
-//   });
-
-//   function hideScrollBar() {
-//     if (store.get("hideScrollbar")) {
-//       $("body").css("overflow-x", "hidden");
-//     } else {
-//       $("body").css("overflow-x", "");
-//     }
-//   }
-//   hideScrollBar();
-
-//   /* END :: Show/Hide Bookmark Bar */
 
 function colorPickerLoaded() {
   // background color picker

@@ -120,7 +120,7 @@
     "message": "General"
   },
   "ui_config_shbmb": {
-    "message": "Show / Hide Bookmark Bar"
+    "message": "Show Bookmark Bar"
   },
   "ui_config_shtlb": {
     "message": "Show top left buttons only on area-hover"
@@ -129,7 +129,7 @@
     "message": "When enabled, the top left buttons will slide out of the way. To access them again, simply mouse over where they normally are."
   },
   "ui_config_shgrid": {
-    "message": "Show / Hide Grid (when unlocked)"
+    "message": "Show Grid (when unlocked)"
   },
   "ui_config_shgrid_desc": {
     "message": "When enabled, the grid will show at all times."
