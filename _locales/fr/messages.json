@@ -107,17 +107,8 @@
 	"ui_config_general":{
 		"message":"G\u00e9n\u00e9ral"
 	},
-	"ui_config_shbmb":{
-		"message":"Afficher\/Masquer la barre de favoris"
-	},
 	"ui_config_shtlb":{
 		"message":"Afficher les boutons en haut \u00e0 gauche uniquement sur la zone de pointage"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Lorsque cette option est coch\u00e9e, les boutons en haut \u00e0 gauche dispara\u00eetront. Pour y acc\u00e9der \u00e0 nouveau, passez la souris au-dessus de l'endroit o\u00f9 ils \u00e9taient normalement."
-	},
-	"ui_config_shgrid":{
-		"message":"Afficher \/ Masquer la grille (lors du d\u00e9verrouillage)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Pour l'ic\u00f4ne de <i>stock<\/i> Amazon, s\u00e9lectionnez votre pays."

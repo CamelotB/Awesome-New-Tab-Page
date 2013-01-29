@@ -119,17 +119,8 @@
 	"ui_config_general":{
 		"message":"General"
 	},
-	"ui_config_shbmb":{
-		"message":"Mostrar \/ ocultar barra de marcadores"
-	},
 	"ui_config_shtlb":{
 		"message":"Mostrar los botones de la izquierda s\u00f3lo en el \u00e1rea activada"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Cuando esta opci\u00f3n est\u00e9 activada, los botones de arriba a la izquierda se ocultar\u00e1n. Para acceder a ellos de nuevo, simplemente pase el cursor por encima de est\u00e1 zona."
-	},
-	"ui_config_shgrid":{
-		"message":"Mostrar \/ ocultar cuadr\u00edcula (al estar desbloqueado)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Para el <i>stock<\/i> Amazon acceso directo, selecciona tu pa\u00eds."

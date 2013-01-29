@@ -89,17 +89,8 @@
 	"ui_config_general":{
 		"message":"C\u00e0i \u0111\u1eb7t chung"
 	},
-	"ui_config_shbmb":{
-		"message":"Hi\u1ec7n \/ \u1ea8n Thanh \u0110\u00e1nh d\u1ea5u"
-	},
 	"ui_config_shtlb":{
 		"message":"Hi\u1ec7n n\u00fat c\u00f4ng c\u1ee5 ph\u00eda tr\u00ean b\u00ean tr\u00e1i khi \u0111\u01b0a chu\u1ed9t qua"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Khi l\u1ef1a ch\u1ecdn n\u00e0y \u0111\u00e3 \u0111\u01b0\u1ee3c ch\u1ecdn, nh\u1eefng n\u00fat \u1edf ph\u00eda tr\u00ean b\u00ean tr\u00e1i s\u1ebd t\u1ef1 \u0111\u1ed9ng \u1ea9n \u0111i. \u0110\u1ec3 l\u00e0m n\u00f3 hi\u1ec7n l\u00ean, ch\u1ec9 c\u1ea7n \u0111\u01b0a chu\u1ed9t qua v\u1ecb tr\u00ed n\u00e0y."
-	},
-	"ui_config_shgrid":{
-		"message":"Hi\u1ec7n\/\u1ea8n chia \u00f4 (khi m\u1edf kh\u00f3a)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"D\u00e0nh cho \u0111\u01b0\u1eddng d\u1eabn t\u1edbi <i>kho h\u00e0ng<\/i> Amazon, ch\u1ecdn qu\u1ed1c gia c\u1ee7a b\u1ea1n."

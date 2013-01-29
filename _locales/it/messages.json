@@ -107,17 +107,8 @@
 	"ui_config_general":{
 		"message":"Generale"
 	},
-	"ui_config_shbmb":{
-		"message":"Mostra \/ Nascondi Barra dei Segnalibri"
-	},
 	"ui_config_shtlb":{
 		"message":"Mostra i bottoni a sinistra solo al passaggio del mouse"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Quando questa opzione \u00e8 abilitata, i bottoni in alto a sinistra saranno a scomparsa. Per vederli di nuovo, muovi semplicemente il mouse verso il bordo sinistro dello schermo."
-	},
-	"ui_config_shgrid":{
-		"message":"Visualizza \/ Nascondi griglia (quando sbloccato)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Per il link <i>stock<\/i> di Amazon, seleziona il tuo stato."

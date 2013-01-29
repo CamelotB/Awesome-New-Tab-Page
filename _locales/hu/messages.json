@@ -92,17 +92,8 @@
 	"ui_config_general":{
 		"message":"\u00c1ltal\u00e1nos"
 	},
-	"ui_config_shbmb":{
-		"message":"K\u00f6nyvjelz\u0151 s\u00e1v mutat\u00e1sa \/ elrejt\u00e9se"
-	},
 	"ui_config_shtlb":{
 		"message":"A bal oldali gombok csak az eg\u00e9r odah\u00faz\u00e1s\u00e1val jelenik meg"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Ha ez az opci\u00f3 be van jel\u00f6lve, akkor a bal oldali gombok nem fognak elt\u0171nni, folyamatosan ott lesznek."
-	},
-	"ui_config_shgrid":{
-		"message":"Mutat\/Elrejt (feloldott \u00e1llapotban)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Az <i>alap<\/i> Amazon parancsikonhoz v\u00e1lassza ki orsz\u00e1g\u00e1t."

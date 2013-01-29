@@ -119,17 +119,8 @@
 	"ui_config_general":{
 		"message":"Og\u00f3lne"
 	},
-	"ui_config_shbmb":{
-		"message":"Poka\u017c \/ Ukryj Pasek Zak\u0142adek"
-	},
 	"ui_config_shtlb":{
 		"message":"Poka\u017c pasek przycisk\u00f3w po lewej stronie po najechaniu myszk\u0105"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Gdy ta opcja jest zaznaczona, przyciski w lewej cz\u0119\u015bci ekranu b\u0119d\u0105 si\u0119 chowa\u0107. Aby mie\u0107 do nich dost\u0119p najed\u017a w to miejsce kursorem myszy."
-	},
-	"ui_config_shgrid":{
-		"message":"Poka\u017c \/ Ukryj Siatk\u0119 (kiedy odblokowane)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Dla <i>domy\u015blnego<\/i> skr\u00f3tu strony Amazon, wybierz sw\u00f3j kraj."

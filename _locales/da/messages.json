@@ -107,17 +107,8 @@
 	"ui_config_general":{
 		"message":"Generelt"
 	},
-	"ui_config_shbmb":{
-		"message":"Vis \/ Gem Bogm\u00e6rke Bar"
-	},
 	"ui_config_shtlb":{
 		"message":"Vis knapperne til venstre i toppen kun ved at tr\u00e6kke musen over dem"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"N\u00e5r denne indstillinger er sl\u00e5et til, vil alle knapperne til venstre i toppen glide v\u00e6k. For at f\u00e5 dem frem skal du bare smide din mus over hvor de plejer at v\u00e6re."
-	},
-	"ui_config_shgrid":{
-		"message":"Vis\/Skjul Gitter (n\u00e5r ul\u00e5st)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"V\u00e6lg dit land til <i>standard<\/i> genvejen; Amazon."
