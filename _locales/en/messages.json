@@ -126,10 +126,13 @@
     "message": "Show top left buttons only on area-hover"
   },
   "ui_config_shtlb_desc": {
-    "message": "When this option is checked, the top left buttons will slide out of the way. To access them again, simply mouse over where they normally are."
+    "message": "When enabled, the top left buttons will slide out of the way. To access them again, simply mouse over where they normally are."
   },
   "ui_config_shgrid": {
     "message": "Show / Hide Grid (when unlocked)"
+  },
+  "ui_config_shgrid_desc": {
+    "message": "When enabled, the grid will show at all times."
   },
   "ui_config_amazonlocale":
   {

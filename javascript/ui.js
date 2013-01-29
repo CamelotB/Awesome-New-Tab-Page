@@ -149,7 +149,7 @@
     moveLeftButtons();
   });
 
-  $("#hideLeftButtons").live("click", function() {
+  $(document).on("change", "#hideLeftButtons", function() {
     if ($(this).is(':checked')) {
       localStorage.setItem("hideLeftButtons", "yes");
       moveLeftButtons();
@@ -207,24 +207,24 @@
       $("#bookmarksBar").hide();
     }
 
-  $("#toggleBmb").live("click", function() {
-    if ($(this).is(':checked')) {
-      if ( bookmark_bar_rendered === false ) {
-        bookmark_bar_rendered = true;
-        required('bookmarkbar', function() {
-          chrome.bookmarks.getTree(getBookmarks);
-        });
-      }
+    $(document).on("change", "#toggleBmb", function() {
+      if ($(this).is(':checked')) {
+        if ( bookmark_bar_rendered === false ) {
+          bookmark_bar_rendered = true;
+          required('bookmarkbar', function() {
+            chrome.bookmarks.getTree(getBookmarks);
+          });
+        }
 
-      $("#bookmarksBar").show();
-      localStorage.setItem("showbmb", "yes");
-      moveGrid({ "animate_top": true });
-    } else {
-      $("#bookmarksBar").hide();
-      localStorage.setItem("showbmb", "no");
-      moveGrid({ "animate_top": true });
-    }
-  });
+        $("#bookmarksBar").show();
+        localStorage.setItem("showbmb", "yes");
+        moveGrid({ "animate_top": true });
+      } else {
+        $("#bookmarksBar").hide();
+        localStorage.setItem("showbmb", "no");
+        moveGrid({ "animate_top": true });
+      }
+    });
 
     if(localStorage.getItem("bg-img-css") && localStorage.getItem("bg-img-css") !== "") {
       $("body").css("background", localStorage.getItem("bg-img-css") );
@@ -298,6 +298,32 @@
   hideScrollBar();
 
   /* END :: Hide Scrollbar */
+
+// /* START :: Show/Hide Bookmark Bar */
+
+//   var hideScrollbarOptionsInit = false;
+//   $(window).bind("antp-config", function() {
+//     var hideScrollbar = $("#hide-scrollbar");
+//     hideScrollbar.attr("checked", store.get("hideScrollbar"));
+
+//     if ( hideScrollbarOptionsInit === false ) {
+//       hideScrollbar.on("change", function() {
+//         store.set("hideScrollbar", $("#hide-scrollbar").is(":checked"));
+//         hideScrollBar();
+//       });
+//     }
+//   });
+
+//   function hideScrollBar() {
+//     if (store.get("hideScrollbar")) {
+//       $("body").css("overflow-x", "hidden");
+//     } else {
+//       $("body").css("overflow-x", "");
+//     }
+//   }
+//   hideScrollBar();
+
+//   /* END :: Show/Hide Bookmark Bar */
 
 function colorPickerLoaded() {
   // background color picker

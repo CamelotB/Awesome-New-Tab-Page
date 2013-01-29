@@ -661,14 +661,16 @@ var
       transclude: true,
       scope: { name: '@' },
       template:
-        '<div class="onoffswitch">' +
-          '<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="{{name}}">' +
-          '<label class="onoffswitch-label" for="{{name}}">' +
-            '<div class="onoffswitch-inner">' +
-              '<div class="onoffswitch-active"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_on") + '</div></div>' +
-              '<div class="onoffswitch-inactive"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_off") + '</div></div>' +
-            '</div>' +
-          '</label>' +
+        '<div>' +
+          '<div class="onoffswitch">' +
+            '<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="{{name}}">' +
+            '<label class="onoffswitch-label" for="{{name}}">' +
+              '<div class="onoffswitch-inner">' +
+                '<div class="onoffswitch-active"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_on") + '</div></div>' +
+                '<div class="onoffswitch-inactive"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_off") + '</div></div>' +
+              '</div>' +
+            '</label>' +
+          '</div>' +
         '</div>',
       replace: true
     };

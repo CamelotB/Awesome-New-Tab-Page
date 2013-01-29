@@ -255,7 +255,7 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
   z-index: 2;
 
   transition: all 150ms ease-in-out; /* for mouseover effect */
-  -webkit-transition: all 150ms ease-in-out;
+    -webkit-transition: all 150ms ease-in-out;
 }
 .app-name {
   position: absolute;
@@ -271,21 +271,24 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
   color: white;
 }
 .bubble {
+  font-family: Trebuchet, Arial, sans-serif;
   cursor: pointer;
   max-height: 35px;
   overflow: hidden;
   display: inline-block;
   padding: 10px;
-  background-color: #E2E1DF;
+  background-color: #A1A1A1;
+  color: white;
+  font-weight: bold;
   opacity: 1.0;
+  line-height: 10px;
+  font-size: 14px;
   transition: all 250ms ease-in-out; /* for mouseover effect */
     -webkit-transition: all 250ms ease-in-out;
-    -moz-transition: all 250ms ease-in-out;
-    -ms-transition: all 250ms ease-in-out;
-    -o-transition: all 250ms ease-in-out;
+  text-transform: uppercase;
 }
 .bubble:hover {
-  background-color: #C7C6BF;
+  background-color: #C2C2C2;
   opacity: 0.9;
 }
 #recently-closed-tabs-menu {
@@ -492,6 +495,10 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
 }
 
 /* UI-2 */
+.option-container {
+  max-width: 80%;
+}
+
 .ui-2 h3 {
   margin-bottom: 0;
   margin-top: 5px;
@@ -952,6 +959,9 @@ body > .widget-drawer-app img {
 }
 .opacity-0 {
   opacity: 0;
+}
+.overflow-auto {
+  overflow: auto;
 }
 
 /**
