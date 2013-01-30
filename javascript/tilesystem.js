@@ -260,569 +260,568 @@ function setStuff() {
   });
 }
 
-  // Trigger mouseup on escape key
-  $(document).keyup(function(e) {
-    if (e.which == 27) {
-      if ( typeof(held_element.element) === "object" ) {
-        $(held_element.element).trigger("mouseup");
-      }
-      if ( typeof(resize_element.element) === "object" )
-      $(".resize-tile > div").trigger("mouseup");
-
-      // Close all UI-2 elements
-      $(".ui-2.x").trigger("click");
-
-      $(".ui-2#editor .iframe-mask").removeClass("filesystem-drop-area");
+// Trigger mouseup on escape key
+$(document).keyup(function(e) {
+  if (e.which == 27) {
+    if ( typeof(held_element.element) === "object" ) {
+      $(held_element.element).trigger("mouseup");
     }
-  });
+    if ( typeof(resize_element.element) === "object" )
+    $(".resize-tile > div").trigger("mouseup");
 
-  $(window).mouseup("mouseup", function(e) {
-    if ( typeof(resize_element.element) === "object" ) {
-      $(".resize-tile > div").trigger("mouseup");
-    }
-  });
+    // Close all UI-2 elements
+    $(".ui-2.x").trigger("click");
 
-  /* START :: Resize */
+    $(".ui-2#editor .iframe-mask").removeClass("filesystem-drop-area");
+  }
+});
 
-    resize_element = {};
-    resize_element.element = false;
-    // When a tile resize square is clicked
-    $(".resize-tile > div").live("mousedown", function(e) {
-      if ( lock === true ) {
-        resize_element.element = false;
-        return false;
-      }
+$(window).mouseup("mouseup", function(e) {
+  if ( typeof(resize_element.element) === "object" ) {
+    $(".resize-tile > div").trigger("mouseup");
+  }
+});
 
-      $(".ui-2.x").trigger("click");
+/* START :: Resize */
 
-      switch ( $(this).attr("class") ) {
-        case "resize-tile-top":
-          resize_element.side = "top";    break;
-        case "resize-tile-bottom":
-          resize_element.side = "bottom"; break;
-        case "resize-tile-left":
-          resize_element.side = "left";   break;
-        case "resize-tile-right":
-          resize_element.side = "right";  break;
-        default:
-          return console.error("Resize Mousedown", "Invalid side.");
-      }
-      widgets = JSON.parse(localStorage.getItem("widgets"));
-
-
-      resize_element.element = $(this).closest(".widget")[0];
-      var id = $(resize_element.element).attr("id");
-
-      // Ensure apps/custom shortcuts are resizable
-      if ( widgets[id].type
-      && (widgets[id].type === "shortcut" || widgets[id].type === "app") ) {
-        widgets[id].resize = true;
-        widgets[id].v2 = {};
-        widgets[id].v2.min_width  = 1;
-        widgets[id].v2.max_width  = 2;
-        widgets[id].v2.min_height = 1;
-        widgets[id].v2.max_height = 2;
-      }
-
-      if ( typeof(widgets[id]) === "object"
-        && typeof(widgets[id].resize) === "boolean"
-        && typeof(widgets[id].v2) === "object"
-        && widgets[id].resize === true ) {
-        resize_element.v2         = widgets[id].v2;
-      } else {
-        resize_element.element = false;
-        return console.error("Resize Mousedown", resize_element.side, "Tile storage discrepancy; tile not resizable.");
-      }
-
-      resize_element.top     = $(resize_element.element).position().top;
-      resize_element.left    = $(resize_element.element).position().left;
-      resize_element.width   = $(resize_element.element).width();
-      resize_element.height  = $(resize_element.element).height();
-      resize_element.clientX = e.clientX;
-      resize_element.clientY = e.clientY;
-      resize_element.tileH   = $(resize_element.element).attr("tile-height");
-      resize_element.tileW   = $(resize_element.element).attr("tile-width");
-      resize_element.moved_left = 0;
-      resize_element.moved_top  = 0;
-
-      $(getCovered( resize_element.element ).tiles).addClass("empty");
-
-      $(resize_element.element).find("#shortcut-edit,#delete,#widget-config").addClass("force-hide");
-
-      $(resize_element.element)
-        .addClass("widget-resize");
-
-      e.preventDefault();
-      e.stopPropagation();
-    });
-
-    // When a tile resize square is released
-    $(document).live("mousemove", function(e) {
-      if ( lock === true ) {
-        resize_element.element = false;
-        return false;
-      }
-
-      if ( typeof(resize_element.element) !== "object" ) {
-        return;
-      }
-
-      var new_width = 0;
-      var new_height = 0;
-      switch ( resize_element.side ) {
-        case "top":
-          new_height = ( resize_element.clientY - e.clientY ) + resize_element.height;
-          new_top    = resize_element.top - ( resize_element.clientY - e.clientY );
-
-          new_height = calcHeight({
-            "height": new_height,
-            "min"  : resize_element.v2.min_height,
-            "max"  : resize_element.v2.max_height
-          });
-
-          if ( new_height.height <= calcHeight({"is": resize_element.v2.min_height}).height
-            || new_height.height >= calcHeight({"is": resize_element.v2.max_height}).height ) return;
-
-          resize_element.moved_top = ( resize_element.clientY - e.clientY );
-
-          if( new_top < (GRID_TILE_PADDING*2) ) {
-            new_top = (GRID_TILE_PADDING*2);
-            return;
-          }
-
-          $(resize_element.element).css({
-            "height" : new_height.height,
-            "top"  : new_top
-          }).attr({"tile-height": new_height.new_y});
-
-          break;
-        case "bottom":
-          new_height = ( e.clientY - resize_element.clientY ) + resize_element.height;
-
-          new_height = calcHeight({
-            "height": new_height,
-            "min"  : resize_element.v2.min_height,
-            "max"  : resize_element.v2.max_height
-          });
-
-          $(resize_element.element).css({
-            "height" : new_height.height
-          }).attr({"tile-height": new_height.new_y});
-
-          break;
-        case "left":
-          new_width = ( resize_element.clientX - e.clientX ) + resize_element.width;
-          new_left  = resize_element.left - ( resize_element.clientX - e.clientX );
-
-          new_width = calcWidth({
-            "width": new_width,
-            "min"  : resize_element.v2.min_width,
-            "max"  : resize_element.v2.max_width
-          });
-
-          if ( new_width.width <= calcWidth({"is": resize_element.v2.min_width}).width
-            || new_width.width >= calcWidth({"is": resize_element.v2.max_width}).width ) return;
-
-          resize_element.moved_left = ( resize_element.clientX - e.clientX );
-
-          if( new_left < (GRID_TILE_PADDING*2) ) {
-            new_left = (GRID_TILE_PADDING*2);
-            return;
-          }
-
-          $(resize_element.element).css({
-            "width" : new_width.width,
-            "left"  : new_left
-          }).attr({"tile-width": new_width.new_x});
-
-          break;
-        case "right":
-          new_width = ( e.clientX - resize_element.clientX ) + resize_element.width;
-
-          new_width = calcWidth({
-            "width": new_width,
-            "min"  : resize_element.v2.min_width,
-            "max"  : resize_element.v2.max_width
-          });
-
-          $(resize_element.element).css({
-            "width" : new_width.width
-          }).attr({"tile-width": new_width.new_x});
-
-          break;
-      }
-    });
-
-    function calcWidth(obj) {
-      if ( obj.width === undefined ) obj.width = 0;
-      if ( obj.is !== undefined) obj.min = obj.max = obj.is;
-      obj.min = ( obj.min < TILE_MIN_WIDTH ) ? TILE_MIN_WIDTH : obj.min;
-      obj.max = ( obj.max > TILE_MAX_WIDTH ) ? TILE_MAX_WIDTH : obj.max;
-      if ( obj.width < ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) ) ) {
-        obj.width = ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) );
-      }
-      if ( obj.width > ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) ) ) {
-        obj.width = ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) );
-      }
-
-      return {
-        "width" : obj.width,
-        "new_x" : Math.ceil( obj.width / (GRID_TILE_SIZE + (GRID_TILE_PADDING * 2)) )
-      };
-    }
-
-    function calcHeight(obj) {
-      if ( obj.height === undefined ) obj.height = 0;
-      if ( obj.is !== undefined) obj.min = obj.max = obj.is;
-      obj.min = ( obj.min < TILE_MIN_HEIGHT ) ? TILE_MIN_HEIGHT : obj.min;
-      obj.max = ( obj.max > TILE_MAX_HEIGHT ) ? TILE_MAX_HEIGHT : obj.max;
-      if ( obj.height < ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) ) ) {
-        obj.height = ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) );
-      }
-      if ( obj.height > ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) ) ) {
-        obj.height = ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) );
-      }
-
-      return {
-        "height" : obj.height,
-        "new_y" : Math.ceil( obj.height / (GRID_TILE_SIZE + (GRID_TILE_PADDING * 2)) )
-      };
-    }
-
-    // When a tile resize square is released
-    $(".resize-tile > div, .widget").live("mouseup", function(e) {
-      if ( lock === true ) {
-        resize_element.element = false;
-        return false;
-      }
-
-      if ( typeof(resize_element.element) !== "object" ) {
-        return;
-      }
-
-      var left = $(resize_element.element).position().left;
-      var column, bracket;
-      for (var col = 1; col < 50; col++) {
-        bracket = ((GRID_TILE_SIZE * (col-0)) + (GRID_TILE_PADDING * 2) * (col-0)) + 6;
-        if ( bracket > left+5 ) {
-          new_left  = ((GRID_TILE_SIZE * (col-1)) + (GRID_TILE_PADDING * 2) * (col-1)) + 6;
-
-          column = col - 1;
-
-          $(resize_element.element).css({
-            "left": new_left
-          }).attr("land-left", col);
-          break;
-        }
-      }
-
-      var top = $(resize_element.element).position().top;
-      var row;
-      for (var _row = 1; _row < 50; _row++) {
-        bracket = ((GRID_TILE_SIZE * (_row-0)) + (GRID_TILE_PADDING * 2) * (_row-0)) + 6;
-        if ( bracket > top+5 ) {
-          new_top  = ((GRID_TILE_SIZE * (_row-1)) + (GRID_TILE_PADDING * 2) * (_row-1)) + 6;
-
-          row = _row - 1;
-
-          $(resize_element.element).css({
-            "top": new_top
-          }).attr("land-top", _row);
-          break;
-        }
-      }
-
-      $(resize_element.element).css({
-        "width" : calcWidth ({"is": $(resize_element.element).attr("tile-width")  }).width,
-        "height": calcHeight({"is": $(resize_element.element).attr("tile-height") }).height
-      }).removeClass("widget-resize");
-
-      if ( getCovered( resize_element.element ).clear === true ) {
-        updateWidget({
-          "id"    : $(resize_element.element).attr("id"),
-          "width" : $(resize_element.element).attr("tile-width"),
-          "height": $(resize_element.element).attr("tile-height"),
-          "left"  : column,
-          "top"   : row
-        });
-      } else {
-        $(resize_element.element).css({
-          "width" : resize_element.width,
-          "height": resize_element.height,
-          "left"  : resize_element.left,
-          "top"   : resize_element.top
-        }).attr({
-          "tile-width" : resize_element.tileW,
-          "tile-height": resize_element.tileH
-        });
-      }
-
-      $(getCovered( resize_element.element ).tiles).removeClass("empty");
-
-      $(resize_element.element).find("#shortcut-edit,#delete,#widget-config").removeClass("force-hide");
-
+  resize_element = {};
+  resize_element.element = false;
+  // When a tile resize square is clicked
+  $(".resize-tile > div").live("mousedown", function(e) {
+    if ( lock === true ) {
       resize_element.element = false;
+      return false;
+    }
 
+    $(".ui-2.x").trigger("click");
+
+    switch ( $(this).attr("class") ) {
+      case "resize-tile-top":
+        resize_element.side = "top";    break;
+      case "resize-tile-bottom":
+        resize_element.side = "bottom"; break;
+      case "resize-tile-left":
+        resize_element.side = "left";   break;
+      case "resize-tile-right":
+        resize_element.side = "right";  break;
+      default:
+        return console.error("Resize Mousedown", "Invalid side.");
+    }
+    widgets = JSON.parse(localStorage.getItem("widgets"));
+
+
+    resize_element.element = $(this).closest(".widget")[0];
+    var id = $(resize_element.element).attr("id");
+
+    // Ensure apps/custom shortcuts are resizable
+    if ( widgets[id].type
+    && (widgets[id].type === "shortcut" || widgets[id].type === "app") ) {
+      widgets[id].resize = true;
+      widgets[id].v2 = {};
+      widgets[id].v2.min_width  = 1;
+      widgets[id].v2.max_width  = 2;
+      widgets[id].v2.min_height = 1;
+      widgets[id].v2.max_height = 2;
+    }
+
+    if ( typeof(widgets[id]) === "object"
+      && typeof(widgets[id].resize) === "boolean"
+      && typeof(widgets[id].v2) === "object"
+      && widgets[id].resize === true ) {
+      resize_element.v2         = widgets[id].v2;
+    } else {
+      resize_element.element = false;
+      return console.error("Resize Mousedown", resize_element.side, "Tile storage discrepancy; tile not resizable.");
+    }
+
+    resize_element.top     = $(resize_element.element).position().top;
+    resize_element.left    = $(resize_element.element).position().left;
+    resize_element.width   = $(resize_element.element).width();
+    resize_element.height  = $(resize_element.element).height();
+    resize_element.clientX = e.clientX;
+    resize_element.clientY = e.clientY;
+    resize_element.tileH   = $(resize_element.element).attr("tile-height");
+    resize_element.tileW   = $(resize_element.element).attr("tile-width");
+    resize_element.moved_left = 0;
+    resize_element.moved_top  = 0;
+
+    $(getCovered( resize_element.element ).tiles).addClass("empty");
+
+    $(resize_element.element).find("#shortcut-edit,#delete,#widget-config").addClass("force-hide");
+
+    $(resize_element.element)
+      .addClass("widget-resize");
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  // When a tile resize square is released
+  $(document).live("mousemove", function(e) {
+    if ( lock === true ) {
+      resize_element.element = false;
+      return false;
+    }
+
+    if ( typeof(resize_element.element) !== "object" ) {
+      return;
+    }
+
+    var new_width = 0;
+    var new_height = 0;
+    switch ( resize_element.side ) {
+      case "top":
+        new_height = ( resize_element.clientY - e.clientY ) + resize_element.height;
+        new_top    = resize_element.top - ( resize_element.clientY - e.clientY );
+
+        new_height = calcHeight({
+          "height": new_height,
+          "min"  : resize_element.v2.min_height,
+          "max"  : resize_element.v2.max_height
+        });
+
+        if ( new_height.height <= calcHeight({"is": resize_element.v2.min_height}).height
+          || new_height.height >= calcHeight({"is": resize_element.v2.max_height}).height ) return;
+
+        resize_element.moved_top = ( resize_element.clientY - e.clientY );
+
+        if( new_top < (GRID_TILE_PADDING*2) ) {
+          new_top = (GRID_TILE_PADDING*2);
+          return;
+        }
+
+        $(resize_element.element).css({
+          "height" : new_height.height,
+          "top"  : new_top
+        }).attr({"tile-height": new_height.new_y});
+
+        break;
+      case "bottom":
+        new_height = ( e.clientY - resize_element.clientY ) + resize_element.height;
+
+        new_height = calcHeight({
+          "height": new_height,
+          "min"  : resize_element.v2.min_height,
+          "max"  : resize_element.v2.max_height
+        });
+
+        $(resize_element.element).css({
+          "height" : new_height.height
+        }).attr({"tile-height": new_height.new_y});
+
+        break;
+      case "left":
+        new_width = ( resize_element.clientX - e.clientX ) + resize_element.width;
+        new_left  = resize_element.left - ( resize_element.clientX - e.clientX );
+
+        new_width = calcWidth({
+          "width": new_width,
+          "min"  : resize_element.v2.min_width,
+          "max"  : resize_element.v2.max_width
+        });
+
+        if ( new_width.width <= calcWidth({"is": resize_element.v2.min_width}).width
+          || new_width.width >= calcWidth({"is": resize_element.v2.max_width}).width ) return;
+
+        resize_element.moved_left = ( resize_element.clientX - e.clientX );
+
+        if( new_left < (GRID_TILE_PADDING*2) ) {
+          new_left = (GRID_TILE_PADDING*2);
+          return;
+        }
+
+        $(resize_element.element).css({
+          "width" : new_width.width,
+          "left"  : new_left
+        }).attr({"tile-width": new_width.new_x});
+
+        break;
+      case "right":
+        new_width = ( e.clientX - resize_element.clientX ) + resize_element.width;
+
+        new_width = calcWidth({
+          "width": new_width,
+          "min"  : resize_element.v2.min_width,
+          "max"  : resize_element.v2.max_width
+        });
+
+        $(resize_element.element).css({
+          "width" : new_width.width
+        }).attr({"tile-width": new_width.new_x});
+
+        break;
+    }
+  });
+
+  function calcWidth(obj) {
+    if ( obj.width === undefined ) obj.width = 0;
+    if ( obj.is !== undefined) obj.min = obj.max = obj.is;
+    obj.min = ( obj.min < TILE_MIN_WIDTH ) ? TILE_MIN_WIDTH : obj.min;
+    obj.max = ( obj.max > TILE_MAX_WIDTH ) ? TILE_MAX_WIDTH : obj.max;
+    if ( obj.width < ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) ) ) {
+      obj.width = ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) );
+    }
+    if ( obj.width > ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) ) ) {
+      obj.width = ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) );
+    }
+
+    return {
+      "width" : obj.width,
+      "new_x" : Math.ceil( obj.width / (GRID_TILE_SIZE + (GRID_TILE_PADDING * 2)) )
+    };
+  }
+
+  function calcHeight(obj) {
+    if ( obj.height === undefined ) obj.height = 0;
+    if ( obj.is !== undefined) obj.min = obj.max = obj.is;
+    obj.min = ( obj.min < TILE_MIN_HEIGHT ) ? TILE_MIN_HEIGHT : obj.min;
+    obj.max = ( obj.max > TILE_MAX_HEIGHT ) ? TILE_MAX_HEIGHT : obj.max;
+    if ( obj.height < ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) ) ) {
+      obj.height = ( (GRID_TILE_SIZE * obj.min) + ((GRID_TILE_PADDING*2)*(obj.min-1)) );
+    }
+    if ( obj.height > ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) ) ) {
+      obj.height = ( (GRID_TILE_SIZE * obj.max) + ((GRID_TILE_PADDING*2)*(obj.max-1)) );
+    }
+
+    return {
+      "height" : obj.height,
+      "new_y" : Math.ceil( obj.height / (GRID_TILE_SIZE + (GRID_TILE_PADDING * 2)) )
+    };
+  }
+
+  // When a tile resize square is released
+  $(".resize-tile > div, .widget").live("mouseup", function(e) {
+    if ( lock === true ) {
+      resize_element.element = false;
+      return false;
+    }
+
+    if ( typeof(resize_element.element) !== "object" ) {
+      return;
+    }
+
+    var left = $(resize_element.element).position().left;
+    var column, bracket;
+    for (var col = 1; col < 50; col++) {
+      bracket = ((GRID_TILE_SIZE * (col-0)) + (GRID_TILE_PADDING * 2) * (col-0)) + 6;
+      if ( bracket > left+5 ) {
+        new_left  = ((GRID_TILE_SIZE * (col-1)) + (GRID_TILE_PADDING * 2) * (col-1)) + 6;
+
+        column = col - 1;
+
+        $(resize_element.element).css({
+          "left": new_left
+        }).attr("land-left", col);
+        break;
+      }
+    }
+
+    var top = $(resize_element.element).position().top;
+    var row;
+    for (var _row = 1; _row < 50; _row++) {
+      bracket = ((GRID_TILE_SIZE * (_row-0)) + (GRID_TILE_PADDING * 2) * (_row-0)) + 6;
+      if ( bracket > top+5 ) {
+        new_top  = ((GRID_TILE_SIZE * (_row-1)) + (GRID_TILE_PADDING * 2) * (_row-1)) + 6;
+
+        row = _row - 1;
+
+        $(resize_element.element).css({
+          "top": new_top
+        }).attr("land-top", _row);
+        break;
+      }
+    }
+
+    $(resize_element.element).css({
+      "width" : calcWidth ({"is": $(resize_element.element).attr("tile-width")  }).width,
+      "height": calcHeight({"is": $(resize_element.element).attr("tile-height") }).height
+    }).removeClass("widget-resize");
+
+    if ( getCovered( resize_element.element ).clear === true ) {
+      updateWidget({
+        "id"    : $(resize_element.element).attr("id"),
+        "width" : $(resize_element.element).attr("tile-width"),
+        "height": $(resize_element.element).attr("tile-height"),
+        "left"  : column,
+        "top"   : row
+      });
+    } else {
+      $(resize_element.element).css({
+        "width" : resize_element.width,
+        "height": resize_element.height,
+        "left"  : resize_element.left,
+        "top"   : resize_element.top
+      }).attr({
+        "tile-width" : resize_element.tileW,
+        "tile-height": resize_element.tileH
+      });
+    }
+
+    $(getCovered( resize_element.element ).tiles).removeClass("empty");
+
+    $(resize_element.element).find("#shortcut-edit,#delete,#widget-config").removeClass("force-hide");
+
+    resize_element.element = false;
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  /* END :: Resize */
+
+/* START :: Move */
+
+  var held_element = {};
+
+  held_element.element = false;
+  // When a tile is picked up
+  $(".widget").live("mousedown", function(e) {
+    if(lock === true) {
+      held_element.element = false;
+      return false;
+    }
+
+    $(".ui-2.x").trigger("click");
+
+    $(".widget").css("z-index", "1");
+
+    held_element.offsetX          = e.offsetX;
+    held_element.offsetY          = e.offsetY;
+    held_element.oldX             = $(this).position().left;
+    held_element.oldY             = $(this).position().top;
+    held_element.width            = $(this).width();
+    held_element.height           = $(this).height();
+    held_element.startingMousePos = {left: e.pageX, top: e.pageY};
+
+    if( $(this).attr("app-source") === "from-drawer" ) {
+      held_element.element = $(this).clone()
+        .addClass("widget-drag").css({
+          "position": "absolute",
+          "z-index" : "100"
+      }).prependTo("body");
+
+        // Ensure that it's always droppable
+      held_element.offsetX_required = $(held_element.element).width()  / 2;
+      held_element.offsetY_required = $(held_element.element).height() / 2;
+
+      held_element.element.css({
+        "left": e.pageX - held_element.offsetX_required - GRID_MARGIN_LEFT(),
+        "top" : e.pageY - held_element.offsetY_required  - GRID_MARGIN_TOP(),
+        });
+
+      $(".ui-2#apps,.ui-2#widgets").css("display", "none");
+    } else {
+      var tiles = getCovered(this);
+      $(tiles.tiles).each(function(ind, elem){
+        $(elem).toggleClass("empty", true);
+      });
+
+      $(this).addClass("widget-drag")
+        .css("z-index", "100");
+
+      held_element.element = this;
+    }
+
+    $(".resize-tile").css("display", "none");
+    $(this).find(".resize-tile").css("display", "block");
+
+    if ( e.preventDefault ) {
       e.preventDefault();
-      e.stopPropagation();
-    });
+    }
+  });
 
-    /* END :: Resize */
+  // When a tile is released
+  $(".widget").live("mouseup", function(e) {
+    if ( lock === true ) {
+      held_element.element = false;
+      return false;
+    }
+    if ( held_element.element === false ) {
+      return false;
+    }
 
-  /* START :: Move */
+    update = true;
 
-    var held_element = {};
+    var closestElm = findClosest(this);
+    var tiles = getCovered(this);
+
+    if ( tiles.clear === true ) {
+      if( $(this).attr("app-source") === "from-drawer" && $(this).attr("tile-widget") === "true" ) {
+        var is_widget = true,
+            src       = $(this).attr("tile-widget-src"),
+            width     = $(this).attr("tile-width"),
+            height    = $(this).attr("tile-height"),
+            poke      = $(this).attr("tile-poke"),
+            stock     = stock_widgets[$(this).attr("stock")],
+            multi_placement = $(this).attr("multi_placement");
+      } else if ( $(this).attr("app-source") === "from-drawer" && $(this).attr("widget") === undefined ) {
+        var is_widget = false,
+            src       = undefined,
+            width     = 1,
+            height    = 1,
+            poke      = undefined,
+            stock     = $(this).attr("stock"),
+            multi_placement = false;
+      }
+
+      if ( $(this).attr("app-source") === "from-drawer" ) {
+        addWidget($(this).attr("id"), {
+          top: $(closestElm).attr("land-top"),
+          left: $(closestElm).attr("land-left")
+        });
+      }
+
+      if ( $(this).attr("app-source") !== "from-drawer" ) {
+        updateWidget({
+          "id"  : $(this).attr("id"),
+          "top" : $(closestElm).attr("land-top"),
+          "left": $(closestElm).attr("land-left")
+        });
+      }
+
+      $(this).removeClass("widget-drag").css({
+        "left": $(closestElm).position().left,
+        "top" : $(closestElm).position().top,
+        "z-index": "2"
+      });
+
+      $(tiles.tiles).each(function(ind, elem){
+          $(elem).toggleClass("empty", false);
+      });
+
+    } else { // If the tile was full
+      if (e.pageX = held_element.startingMousePos.left && e.pageY == held_element.startingMousePos.top) {
+        $.jGrowl(chrome.i18n.getMessage("ui_drag_widget_message"));
+      }
+
+      $(held_element.element).removeClass("widget-drag").css({
+        "left": held_element.oldX,
+        "top" : held_element.oldY,
+        "z-index": "2"
+      });
+
+      tiles = getCovered(this);
+
+      $(tiles.tiles).each(function(ind, elem){
+        $(elem).toggleClass("empty", false);
+      });
+    }
+
+    if ( $(held_element.element).attr("app-source") === "from-drawer") {
+      $(held_element.element).remove();
+    }
+    $("body > .widget-drag").remove();
 
     held_element.element = false;
-    // When a tile is picked up
-    $(".widget").live("mousedown", function(e) {
-      if(lock === true) {
-        held_element.element = false;
-        return false;
-      }
+    $(".tile").removeClass("tile-green tile-red")
+      .css("z-index", "0");
+  });
 
-      $(".ui-2.x").trigger("click");
-
-      $(".widget").css("z-index", "1");
-
-      held_element.offsetX          = e.offsetX;
-      held_element.offsetY          = e.offsetY;
-      held_element.oldX             = $(this).position().left;
-      held_element.oldY             = $(this).position().top;
-      held_element.width            = $(this).width();
-      held_element.height           = $(this).height();
-      held_element.startingMousePos = {left: e.pageX, top: e.pageY};
-
-      if( $(this).attr("app-source") === "from-drawer" ) {
-        held_element.element = $(this).clone()
-          .addClass("widget-drag").css({
-            "position": "absolute",
-            "z-index" : "100"
-        }).prependTo("body");
-
-          // Ensure that it's always droppable
-        held_element.offsetX_required = $(held_element.element).width()  / 2;
-        held_element.offsetY_required = $(held_element.element).height() / 2;
-
-        held_element.element.css({
-          "left": e.pageX - held_element.offsetX_required - GRID_MARGIN_LEFT(),
-          "top" : e.pageY - held_element.offsetY_required  - GRID_MARGIN_TOP(),
-          });
-
-        $(".ui-2#apps,.ui-2#widgets").css("display", "none");
-      } else {
-        var tiles = getCovered(this);
-        $(tiles.tiles).each(function(ind, elem){
-          $(elem).toggleClass("empty", true);
-        });
-
-        $(this).addClass("widget-drag")
-          .css("z-index", "100");
-
-        held_element.element = this;
-      }
-
-      $(".resize-tile").css("display", "none");
-      $(this).find(".resize-tile").css("display", "block");
-
-      if ( e.preventDefault ) {
-        e.preventDefault();
-      }
-    });
-
-    // When a tile is released
-    $(".widget").live("mouseup", function(e) {
-      if ( lock === true ) {
-        held_element.element = false;
-        return false;
-      }
-      if ( held_element.element === false ) {
-        return false;
-      }
-
-      update = true;
-
-      var closestElm = findClosest(this);
-      var tiles = getCovered(this);
-
-      if ( tiles.clear === true ) {
-        if( $(this).attr("app-source") === "from-drawer" && $(this).attr("tile-widget") === "true" ) {
-          var is_widget = true,
-              src       = $(this).attr("tile-widget-src"),
-              width     = $(this).attr("tile-width"),
-              height    = $(this).attr("tile-height"),
-              poke      = $(this).attr("tile-poke"),
-              stock     = stock_widgets[$(this).attr("stock")],
-              multi_placement = $(this).attr("multi_placement");
-        } else if ( $(this).attr("app-source") === "from-drawer" && $(this).attr("widget") === undefined ) {
-          var is_widget = false,
-              src       = undefined,
-              width     = 1,
-              height    = 1,
-              poke      = undefined,
-              stock     = $(this).attr("stock"),
-              multi_placement = false;
-        }
-
-        if ( $(this).attr("app-source") === "from-drawer" ) {
-          addWidget($(this).attr("id"), {
-            top: $(closestElm).attr("land-top"),
-            left: $(closestElm).attr("land-left")
-          });
-        }
-
-        if ( $(this).attr("app-source") !== "from-drawer" ) {
-          updateWidget({
-            "id"  : $(this).attr("id"),
-            "top" : $(closestElm).attr("land-top"),
-            "left": $(closestElm).attr("land-left")
-          });
-        }
-
-        $(this).removeClass("widget-drag").css({
-          "left": $(closestElm).position().left,
-          "top" : $(closestElm).position().top,
-          "z-index": "2"
-        });
-
-        $(tiles.tiles).each(function(ind, elem){
-            $(elem).toggleClass("empty", false);
-        });
-
-      } else { // If the tile was full
-        if (e.pageX = held_element.startingMousePos.left && e.pageY == held_element.startingMousePos.top) {
-          $.jGrowl(chrome.i18n.getMessage("ui_drag_widget_message"));
-        }
-
-        $(held_element.element).removeClass("widget-drag").css({
-          "left": held_element.oldX,
-          "top" : held_element.oldY,
-          "z-index": "2"
-        });
-
-        tiles = getCovered(this);
-
-        $(tiles.tiles).each(function(ind, elem){
-          $(elem).toggleClass("empty", false);
-        });
-      }
-
-      if ( $(held_element.element).attr("app-source") === "from-drawer") {
-        $(held_element.element).remove();
-      }
-      $("body > .widget-drag").remove();
-
+  // When a tile is held and moved
+  $(document).live("mousemove", function(e) {
+    if(lock === true) {
       held_element.element = false;
+      return false;
+    }
+    if ( held_element.element === false ) {
+      return false;
+    }
+
+    if ( typeof(held_element.element) === "object" ) {
+      if(update === true){
+        update = false;
+      } else {
+        held_left = held_element.width / 2;
+        held_top = held_element.height / 2;
+
+        if( held_element.offsetX_required )
+          held_left = held_element.offsetX_required;
+        if( held_element.offsetY_required)
+          held_top  = held_element.offsetY_required;
+
+        $(held_element.element).css({
+          "left": e.pageX - held_left - GRID_MARGIN_LEFT(),
+          "top" : e.pageY - held_top  - GRID_MARGIN_TOP()
+        });
+      }
+
+      hscroll = true;
+
+      var closestElm = findClosest(held_element.element);
+      var tiles = getCovered(held_element.element);
+
       $(".tile").removeClass("tile-green tile-red")
         .css("z-index", "0");
-    });
 
-    // When a tile is held and moved
-    $(document).live("mousemove", function(e) {
-      if(lock === true) {
-        held_element.element = false;
-        return false;
-      }
-      if ( held_element.element === false ) {
-        return false;
-      }
-
-      if ( typeof(held_element.element) === "object" ) {
-        if(update === true){
-          update = false;
-        } else {
-          held_left = held_element.width / 2;
-          held_top = held_element.height / 2;
-
-          if( held_element.offsetX_required )
-            held_left = held_element.offsetX_required;
-          if( held_element.offsetY_required)
-            held_top  = held_element.offsetY_required;
-
-          $(held_element.element).css({
-            "left": e.pageX - held_left - GRID_MARGIN_LEFT(),
-            "top" : e.pageY - held_top  - GRID_MARGIN_TOP()
-          });
-        }
-
-        hscroll = true;
-
-        var closestElm = findClosest(held_element.element);
-        var tiles = getCovered(held_element.element);
-
-        $(".tile").removeClass("tile-green tile-red")
-          .css("z-index", "0");
-
-        if ( tiles.clear === true ) {
-          $(tiles.tiles).each(function(ind, elem){
-            $(elem).addClass("tile-green")
-              .css("z-index", "2");
-          });
-        } else {
-          $(tiles.tiles).each(function(ind, elem){
-            $(elem).addClass("tile-red")
-              .css("z-index", "2");
-          });
-        }
-      }
-    });
-    /* END :: Move */
-
-
-  /* START :: Lock */
-    $(document).ready(function() {
-      if(localStorage.getItem("lock") === "false") {
-        $("#unlock-button").trigger("click");
+      if ( tiles.clear === true ) {
+        $(tiles.tiles).each(function(ind, elem){
+          $(elem).addClass("tile-green")
+            .css("z-index", "2");
+        });
       } else {
-        $("body").addClass("locked").removeClass("unlocked");
-        $("#lock-button").hide();
+        $(tiles.tiles).each(function(ind, elem){
+          $(elem).addClass("tile-red")
+            .css("z-index", "2");
+        });
       }
-    });
+    }
+  });
+  /* END :: Move */
 
-    lock = true;
-    $("#lock-button,#unlock-button").live("click", function() {
-      if(lock === true) {
-        // Unlock
-        lock = false;
-        $("body").addClass("unlocked").removeClass("locked");
-        localStorage.setItem("lock", false );
-        $("#lock-button").css("display", "block");
-        $("#unlock-button").css("display", "none");
-        $(".tile").addClass("tile-grid");
+/* START :: Lock */
+  $(document).ready(function() {
+    if(localStorage.getItem("lock") === "false") {
+      $("#unlock-button").trigger("click");
+    } else {
+      $("body").addClass("locked").removeClass("unlocked");
+      $("#lock-button").hide();
+    }
+  });
 
+  lock = true;
+  $("#lock-button,#unlock-button").live("click", function() {
+    if(lock === true) {
+      // Unlock
+      lock = false;
+      $("body").addClass("unlocked").removeClass("locked");
+      localStorage.setItem("lock", false );
+      $("#lock-button").css("display", "block");
+      $("#unlock-button").css("display", "none");
+      $(".tile").addClass("tile-grid");
+
+      $(".ui-2#apps .drawer-app .url").removeClass("url").addClass("disabled-url");
+      setTimeout(function() {
         $(".ui-2#apps .drawer-app .url").removeClass("url").addClass("disabled-url");
-        setTimeout(function() {
-          $(".ui-2#apps .drawer-app .url").removeClass("url").addClass("disabled-url");
-        }, 1100);
+      }, 1100);
 
-        if ( preference.get("hideLeftButtons") ) {
-          $(".side-button").css("left", "0px");
-          $("#widget-holder,#grid-holder").css("left", "27px");
-        }
-      } else {
-        // Lock
-        lock = true;
-        $(".resize-tile").hide();
-
-        hscroll = true;
-
-        $("body").addClass("locked").removeClass("unlocked");
-        localStorage.setItem("lock", true );
-        $("#unlock-button").css("display", "block");
-        $("#lock-button").css("display", "none");
-        $(".tile").removeClass("tile-grid");
-
-        $(".ui-2#apps .drawer-app .disabled-url").removeClass("disabled-url").addClass("url");
-        setTimeout(function() {
-          $(".ui-2#apps .drawer-app .disabled-url").removeClass("disabled-url").addClass("url");
-        }, 1100);
+      if ( preference.get("hideLeftButtons") ) {
+        $(".side-button").css("left", "0px");
+        $("#widget-holder,#grid-holder").css("left", "27px");
       }
-    });
+    } else {
+      // Lock
+      lock = true;
+      $(".resize-tile").hide();
 
-    /* END :: Lock */
+      hscroll = true;
 
+      $("body").addClass("locked").removeClass("unlocked");
+      localStorage.setItem("lock", true );
+      $("#unlock-button").css("display", "block");
+      $("#lock-button").css("display", "none");
+      $(".tile").removeClass("tile-grid");
 
-  /* START :: Tile-Editor UI Interaction */
+      $(".ui-2#apps .drawer-app .disabled-url").removeClass("disabled-url").addClass("url");
+      setTimeout(function() {
+        $(".ui-2#apps .drawer-app .disabled-url").removeClass("disabled-url").addClass("url");
+      }, 1100);
+    }
+  });
+
+  /* END :: Lock */
+
+/* START :: Tile-Editor UI Interaction */
+
   $(document).on("click", "#delete", function(){
     var self = this;
     required('/javascript/tile-editor.js?nocache=12', function() {
@@ -842,6 +841,7 @@ function setStuff() {
     e.stopPropagation();
     e.preventDefault();
   });
+
   /* END :: Tile-Editor UI Interaction */
 
 
@@ -951,33 +951,35 @@ function updateWidget(obj) {
 }
 
 
-/* Tile Search */
-// To prevnt tile animation when clicked in search-box
-$(document).on("mousedown", ".shortcut input.search-box, .app input.search-box", function(e) {
-  $(this).closest(".app, .shortcut").removeClass("search-not-active");
-});
-$(document).on("mouseup", ".shortcut input.search-box, .app input.search-box", function(e) {
-  $(this).closest(".app, .shortcut").addClass("search-not-active");
-});
+/* START :: Tile Search */
 
-$(document).on("mouseenter", ".shortcut, .app", function(e) {
-  var tile = $(this);
-  var searchBox = tile.find("input.search-box");
-  if (searchBox.length > 0)
-    searchBox.focus();
-});
+  // To prevnt tile animation when clicked in search-box
+  $(document).on("mousedown", ".shortcut input.search-box, .app input.search-box", function(e) {
+    $(this).closest(".app, .shortcut").removeClass("search-not-active");
+  });
+  $(document).on("mouseup", ".shortcut input.search-box, .app input.search-box", function(e) {
+    $(this).closest(".app, .shortcut").addClass("search-not-active");
+  });
 
-$(document).on("mouseleave", ".shortcut, .app", function(e) {
-  var tile = $(this);
-  var searchBox = tile.find("input.search-box");
-  if (searchBox.length > 0)
-    searchBox.blur();
-});
+  $(document).on("mouseenter", ".shortcut, .app", function(e) {
+    var tile = $(this);
+    var searchBox = tile.find("input.search-box");
+    if (searchBox.length > 0)
+      searchBox.focus();
+  });
 
-$(document).on("keydown", ".shortcut input.search-box, .app input.search-box", function(e) {
-  var elem = $(this);
-  if (e.which == 13) {
-    document.location.href = elem.attr('data-search').replace("{input}", encodeURI(elem.val()));
-  }
-});
-/* End Tile Search */
+  $(document).on("mouseleave", ".shortcut, .app", function(e) {
+    var tile = $(this);
+    var searchBox = tile.find("input.search-box");
+    if (searchBox.length > 0)
+      searchBox.blur();
+  });
+
+  $(document).on("keydown", ".shortcut input.search-box, .app input.search-box", function(e) {
+    var elem = $(this);
+    if (e.which == 13) {
+      document.location.href = elem.attr('data-search').replace("{input}", encodeURI(elem.val()));
+    }
+  });
+
+  /* END :: Tile Search */
