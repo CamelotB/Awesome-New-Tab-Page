@@ -43,8 +43,13 @@
     hscroll = true;
   }
 
-  var options_init = true;
+  var optionsInit = false;
   $("#config-button, .ui-2.config").live("click", function(){
+    if ( !optionsInit ) {
+      $(window).trigger("antp-config-first-open");
+      optionsInit = true;
+    }
+
     _gaq.push([ '_trackEvent', 'Window', "Config" ]);
     closeButton(".ui-2#config");
     $(".ui-2#config").toggle();
@@ -77,22 +82,15 @@
     $("#recently-closed-tabs-menu").toggle();
   });
 
+  var aboutInit = false;
   $("#logo-button,.ui-2.logo").live("click", function(){
     _gaq.push([ '_trackEvent', 'Window', "About" ]);
 
     closeButton(".ui-2#about");
     $(".ui-2#about").toggle();
 
-    if(options_init === true) {
-      options_init = false;
-
-      (function() {
-        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-        s.type = 'text/javascript';
-        s.async = true;
-        s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
-        t.parentNode.insertBefore(s, t);
-      })();
+    if ( !aboutInit ) {
+      aboutInit = true;
 
       (function() {
         var twitterScriptTag = document.createElement('script');
@@ -107,6 +105,14 @@
         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
         po.src = 'https://apis.google.com/js/plusone.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+
+      (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'https://chrome.google.com/webstore/widget/developer/scripts/widget.js';
+        t.parentNode.insertBefore(s, t);
       })();
     }
   });
@@ -129,16 +135,24 @@
 
 /* START :: Top Left Buttons */
 
-  function moveLeftButtons() {
-    if ( localStorage.getItem("hideLeftButtons") === "yes" &&
-      localStorage.getItem("lock") !== "false" ) {
+
+  $(window).bind("antp-config-first-open", function() {
+    var option = preference.get("hideLeftButtons");
+
+    $("#hideLeftButtons").attr("checked", option);
+    $(document).on("change", "#hideLeftButtons", moveLeftButtons);
+  });
+
+  function moveLeftButtons(e) {
+    if ( e )
+      preference.set("hideLeftButtons", $(this).is(":checked"));
+
+    if ( preference.get("hideLeftButtons") && preference.get("lock") ) {
       $("#top-buttons > div").css("left", "-50px");
       $("#widget-holder,#grid-holder").css("left", "0px");
     }
-    if ( localStorage.getItem("hideLeftButtons") === "yes") {
-      $("#hideLeftButtons").attr('checked', 'checked');
-    }
-    if ( localStorage.getItem("hideLeftButtons") !== "yes" ) {
+
+    if ( !preference.get("hideLeftButtons") ) {
       $("#top-buttons > div").css("left", "0px");
       $("#widget-holder,#grid-holder").css("left", "27px");
     }
@@ -148,29 +162,16 @@
     moveLeftButtons();
   });
 
-  $("#hideLeftButtons").live("click", function() {
-    if ($(this).is(':checked')) {
-      localStorage.setItem("hideLeftButtons", "yes");
-      moveLeftButtons();
-    } else {
-      localStorage.setItem("hideLeftButtons", "no");
-      moveLeftButtons();
-    }
-  });
-
   $("#top-buttons").live({
     mouseenter: function() {
-      if ( localStorage.getItem("hideLeftButtons") === "yes" ) {
-
+      if ( preference.get("hideLeftButtons") ) {
         $("#top-buttons > div").css("left", "0px");
         $("#widget-holder,#grid-holder").css("left", "27px");
       }
 
     },
     mouseleave: function() {
-      if ( localStorage.getItem("hideLeftButtons") === "yes"
-        && localStorage.getItem("lock") === "true" ) {
-
+      if ( preference.get("hideLeftButtons") && preference.get("lock") ) {
         $("#top-buttons > div").css("left", "-50px");
         $("#widget-holder,#grid-holder").css("left", "0px");
       }
@@ -179,11 +180,10 @@
 
   /* END :: Top Left Buttons */
 
-
 /* START :: Configure */
 
   $(document).ready(function($) {
-    if(window.location.hash) {
+    if( window.location.hash ) {
       switch(window.location.hash) {
         case "#options":
           $("#config-button").trigger("click");
@@ -191,12 +191,15 @@
       }
     }
 
-    if(localStorage.getItem("showbmb") === null) {
-      localStorage.setItem("showbmb", "no");
-    }
+    $(window).bind("antp-config-first-open", function() {
+      var option = preference.get("showbmb");
+
+      $("#toggleBmb").attr("checked", option);
+      $(document).on("change", "#toggleBmb", updateBookmarkBar);
+    });
 
     bookmark_bar_rendered = false;
-    if(localStorage.getItem("showbmb") === "yes") {
+    if( preference.get("showbmb") ) {
       $("#toggleBmb").attr('checked', 'checked');
       bookmark_bar_rendered = true;
       required('bookmarkbar', function() {
@@ -207,24 +210,27 @@
       $("#bookmarksBar").hide();
     }
 
-  $("#toggleBmb").live("click", function() {
-    if ($(this).is(':checked')) {
-      if ( bookmark_bar_rendered === false ) {
-        bookmark_bar_rendered = true;
-        required('bookmarkbar', function() {
-          chrome.bookmarks.getTree(getBookmarks);
-        });
-      }
+    function updateBookmarkBar(e) {
+      if ( e )
+        preference.set("showbmb", $(this).is(":checked"));
 
-      $("#bookmarksBar").show();
-      localStorage.setItem("showbmb", "yes");
-      moveGrid({ "animate_top": true });
-    } else {
-      $("#bookmarksBar").hide();
-      localStorage.setItem("showbmb", "no");
-      moveGrid({ "animate_top": true });
+      if ( preference.get("showbmb") ) {
+        if ( bookmark_bar_rendered === false ) {
+          bookmark_bar_rendered = true;
+          required('bookmarkbar', function() {
+            chrome.bookmarks.getTree(getBookmarks);
+          });
+        }
+
+        $("#bookmarksBar").show();
+        preference.set("showbmb", true);
+        moveGrid({ "animate_top": true });
+      } else {
+        $("#bookmarksBar").hide();
+        preference.set("showbmb", false);
+        moveGrid({ "animate_top": true });
+      }
     }
-  });
 
     if(localStorage.getItem("bg-img-css") && localStorage.getItem("bg-img-css") !== "") {
       $("body").css("background", localStorage.getItem("bg-img-css") );
@@ -255,7 +261,7 @@
   });
 
   // Clears localStorage
-  $("#reset-button").live("click", function(){
+  $("#reset-button").live("click", function() {
     var reset = confirm( chrome.i18n.getMessage("ui_confirm_reset") );
     if ( reset === true ) {
       deleteShortcuts();
@@ -267,12 +273,71 @@
         reload();
       }, 250);
     } else {
-      $.jGrowl("Whew! Crisis aborted!", { header: "Reset Cancelled" });
+      $.jGrowl("Whew! Crisis averted!", { header: "Reset Cancelled" });
     }
   });
 
+  $(window).bind("antp-config-first-open", function() {
+    var
+      gridwidth = preference.get("grid-width"),
+      gridheight = preference.get("grid-height");
+
+    $("#grid-width").val(gridwidth);
+    $("#grid-height").val(gridheight);
+    $(document).on("change", "#grid-width, #grid-height", updateGridSize);
+  });
+
+  function updateGridSize(e) {
+    if ( e ) {
+      var value = $(this).val();
+
+      if ( value === "" ) {
+        preference.set($(this).attr("id"), null);
+        return;
+      }
+
+      if ($(this).attr("id") === "grid-width") {
+        value  = (value < 4) ? 4 : value;
+        value  = (value > 50) ? 50 : value;
+        $(this).val(value);
+      }
+
+      if ($(this).attr("id") === "grid-height") {
+        value  = (value < 3) ? 3 : value;
+        value  = (value > 25) ? 25 : value;
+        $(this).val(value);
+      }
+
+      preference.set($(this).attr("id"), $(this).val());
+    }
+  }
+
   /* END :: Configure */
 
+/* START :: Hide Scrollbar */
+
+  $(window).bind("antp-config-first-open", function() {
+    var
+      hideScrollbar = $("#hide-scrollbar"),
+      option = preference.get("hideScrollbar");
+    hideScrollbar.attr("checked", option);
+
+    $(document).on("change", "#hide-scrollbar", updateScrollBarVisibility);
+  });
+
+  function updateScrollBarVisibility(e) {
+    if ( e )
+      preference.set("hideScrollbar", $(this).is(":checked"));
+
+    if ( preference.get("hideScrollbar") ) {
+      $("body").css("overflow-x", "hidden");
+    } else {
+      $("body").css("overflow-x", "");
+    }
+  }
+  updateScrollBarVisibility();
+
+  /* END :: Hide Scrollbar */
 
 function colorPickerLoaded() {
   // background color picker

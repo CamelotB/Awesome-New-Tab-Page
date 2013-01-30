@@ -119,17 +119,8 @@
 	"ui_config_general":{
 		"message":"Genel"
 	},
-	"ui_config_shbmb":{
-		"message":"Yer imi \u00e7ubu\u011funu g\u00f6ster \/ gizle"
-	},
 	"ui_config_shtlb":{
 		"message":"\u00dcst soldaki d\u00fc\u015fmeleri yanl\u0131zca alan\u0131n \u00fczerine gelindi\u011finde g\u00f6ster"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Bu se\u00e7enek i\u015faretlendi\u011finde, \u00fcst sol d\u00fc\u011fmeler ortadan kaybolur. Onlara tekrar ula\u015fmak i\u00e7in, normalde olduklar\u0131 yere farenizi getirmeniz yeterli."
-	},
-	"ui_config_shgrid":{
-		"message":"K\u0131lavuzu G\u00f6ster \/ Gizle (kilit a\u00e7\u0131kken)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"<i>Mevcuz<\/i> Amazon k\u0131sayolu i\u00e7in, l\u00fctfen bulundu\u011funuz \u00fclkeyi se\u00e7in."

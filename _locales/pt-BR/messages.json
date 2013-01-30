@@ -107,17 +107,8 @@
 	"ui_config_general":{
 		"message":"Geral"
 	},
-	"ui_config_shbmb":{
-		"message":"Mostrar \/ ocultar a barra de favoritos"
-	},
 	"ui_config_shtlb":{
 		"message":"Mostrar bot\u00f5es esquerdo superior apenas de \u00e1rea-foco"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Quando esta op\u00e7\u00e3o estiver marcada, os bot\u00f5es esquerdos superiores deslizar\u00e3o fora da tela. Para acess\u00e1-los novamente, basta passar o mouse sobre onde eles s\u00e3o normalmente."
-	},
-	"ui_config_shgrid":{
-		"message":"Mostrar \/ Ocultar grade (quando desbloqueado)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Para o <i>stock<\/i> atalho da Amazon, selecione o seu pa\u00eds."

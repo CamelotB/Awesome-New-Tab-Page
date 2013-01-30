@@ -120,16 +120,19 @@
     "message": "General"
   },
   "ui_config_shbmb": {
-    "message": "Show / Hide Bookmark Bar"
+    "message": "Show Bookmark Bar"
   },
   "ui_config_shtlb": {
     "message": "Show top left buttons only on area-hover"
   },
   "ui_config_shtlb_desc": {
-    "message": "When this option is checked, the top left buttons will slide out of the way. To access them again, simply mouse over where they normally are."
+    "message": "When enabled, the top left buttons will slide out of the way. To access them again, simply mouse over where they normally are."
   },
   "ui_config_shgrid": {
-    "message": "Show / Hide Grid (when unlocked)"
+    "message": "Show Grid (when unlocked)"
+  },
+  "ui_config_shgrid_desc": {
+    "message": "When enabled, the grid will show at all times."
   },
   "ui_config_amazonlocale":
   {
@@ -158,6 +161,36 @@
   },
   "ui_config_bgimg2": {
     "message": "Example (NO trailing semicolon!):"
+  },
+  "ui_config_onoff_on": {
+    "message": "ON"
+  },
+  "ui_config_onoff_off": {
+    "message": "OFF"
+  },
+  "ui_config_hide_scrollbar": {
+    "message": "Hide Bottom Scrollbar"
+  },
+  "ui_config_hide_scrollbar_tip": {
+    "message": "Hides the scrollbar at the bottom of the page."
+  },
+  "ui_config_advanced": {
+    "message": "Advanced"
+  },
+  "ui_config_advanced_tip": {
+    "message": "Below are advanced options that, if used improperly, can lead to a degraded user experience. Use the following options at your own risk."
+  },
+  "ui_config_advanced_grid_width": {
+    "message": "Set Grid Width"
+  },
+  "ui_config_advanced_grid_width_tip": {
+    "message": "Overrides automatic grid generation. Using this setting may result in your tiles not being loaded. Setting this value too large may impact performance. Min: 4. Max: 50. <b>Erase number to disable!</b> Reload the page to apply."
+  },
+  "ui_config_advanced_grid_height": {
+    "message": "Set Grid Height"
+  },
+  "ui_config_advanced_grid_height_tip": {
+    "message": "Overrides automatic grid generation. Using this setting may result in your tiles not being loaded. Setting this value too large may impact performance. Min: 3. Max: 25. <b>Erase number to disable!</b> Reload the page to apply."
   },
   "ui_about": {
     "message": "About"
@@ -398,13 +431,13 @@
   },
   "ui_import_export_btn_restore": {
     "message": "Restore"
-  }, 
+  },
   "ui_drag_widget_message": {
     "message": "To place a widget, click and drag the widget to an empty tile."
-  }, 
+  },
   "ui_apps_tip_message_title": {
     "message": "New App Installed"
-  }, 
+  },
   "ui_apps_tip_message": {
     "message": "Nice! You just installed an app. You can find all of your installed apps here."
   }

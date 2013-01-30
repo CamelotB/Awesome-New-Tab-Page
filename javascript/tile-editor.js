@@ -16,8 +16,6 @@
   *       relationship with the authors of this project or the project itself.
 ***/
 
-
-
 function removeFromTile(tile) {
   var to_delete = $(tile).parent().parent();
   if(to_delete) {

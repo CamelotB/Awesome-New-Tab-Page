@@ -74,12 +74,6 @@
 	"ui_config_general":{
 		"message":"\u00dcldine"
 	},
-	"ui_config_shbmb":{
-		"message":"N\u00e4ita \/ Peida j\u00e4rjehoidja riba"
-	},
-	"ui_config_shgrid":{
-		"message":"N\u00e4ita \/ Peida v\u00f5rgustikku (kui on avatud)"
-	},
 	"ui_config_reset":{
 		"message":"Taasta"
 	},

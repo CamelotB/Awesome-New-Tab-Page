@@ -213,16 +213,6 @@
           </p>
         </div>
 
-        <div id="about-flattr" class="ui-2">
-          <h3>Flattr</h3>
-          <p class="ilb">
-            Support Awesome New Tab Page's development with Flattr.
-          </p>
-          <p class="ilb">
-            <a class="FlattrButton" style="display:none;" href="http://antp.co/"></a>
-          </p>
-        </div>
-
         <div id="about-share" class="ui-2">
           <h3>{{'ui_about_share' | i18n}}</h3>
           <p>{{'ui_about_share1' | i18n}}</p>
@@ -242,9 +232,7 @@
             {{'ui_about_rate_desc' | i18n}}
           </p>
           <p>
-            <a href="https://chrome.google.com/webstore/detail/mgmiemnjjchgkmgbeljfocdjjnpjnmcg/reviews" class="bubble">
-              <img src="/images/ui-2/stars.png">
-            </a>
+            <g:chrome-web-store widgettype="ratingreview" appid="mgmiemnjjchgkmgbeljfocdjjnpjnmcg"></g:chrome-web-store>
           </p>
         </div>
       </div>
@@ -274,21 +262,28 @@
       <div class="ui-2 contents" id="config-contents">
         <tabs>
           <pane name="{{'ui_config_general' | i18n}}">
-            <div id="toggleBmb-holder">
-              <input id="toggleBmb" type="checkbox" name="show" value="true" />
-              <p class="ilb">{{'ui_config_shbmb' | i18n}}</p>
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>{{'ui_config_shbmb' | i18n}}</b>
+                <p class="tip">{{'ui_config_hide_scrollbar_tip' | i18n}}</p>
+              </div>
+              <onoff name="toggleBmb" />
             </div>
 
-            <div id="hideLeftButtons-holder">
-              <input id="hideLeftButtons" type="checkbox" name="show" value="true" />
-              <p class="ilb">{{'ui_config_shtlb' | i18n}}</p>
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>{{'ui_config_shtlb' | i18n}}</b>
+                <p class="tip">{{'ui_config_shtlb_desc' | i18n}}</p>
+              </div>
+              <onoff name="hideLeftButtons" />
             </div>
 
-            <p class="tip">{{'ui_config_shtlb_desc' | i18n}}</p>
-
-            <div id="toggle-grid-holder">
-              <input id="toggle-grid" type="checkbox" name="show" value="true" />
-              <p class="ilb">{{'ui_config_shgrid' | i18n}}</p>
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>{{'ui_config_shgrid' | i18n}}</b>
+                <p class="tip">{{'ui_config_shgrid_desc' | i18n}}</p>
+              </div>
+              <onoff name="toggle-grid" />
             </div>
 
             <div id="amazon-locale">
@@ -316,7 +311,7 @@
 
           <pane name="{{'ui_config_bg' | i18n}}">
             <div class="bubble ilb bg-color">
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;
             </div>
             <div id="colorselector-bg" class="bubble ilb">
               {{'ui_config_bg_changecolor' | i18n}}
@@ -359,6 +354,35 @@
               <div id="run-import-btn" class="bubble ilb">
                 <i18n message-id="ui_import_export_btn_import_run" />
               </div>
+            </div>
+          </pane>
+
+          <pane name="{{'ui_config_advanced' | i18n}}">
+            <p>
+              {{'ui_config_advanced_tip' | i18n}}
+            </p>
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>{{'ui_config_hide_scrollbar' | i18n}}</b>
+                <p class="tip">{{'ui_config_hide_scrollbar_tip' | i18n}}</p>
+              </div>
+              <onoff name="hide-scrollbar" />
+            </div>
+
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>{{'ui_config_advanced_grid_width' | i18n}}</b>
+                <p class="tip"><i18n message-id="ui_config_advanced_grid_width_tip" /></p>
+              </div>
+              <input type="number" id="grid-width" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="4" max="50" placeholder="{{'ui_config_onoff_off' | i18n}}" />
+            </div>
+
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>{{'ui_config_advanced_grid_height' | i18n}}</b>
+                <p class="tip"><i18n message-id="ui_config_advanced_grid_height_tip" /></p>
+              </div>
+              <input type="number" id="grid-height" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="3" max="25" placeholder="{{'ui_config_onoff_off' | i18n}}" />
             </div>
           </pane>
         </tabs>

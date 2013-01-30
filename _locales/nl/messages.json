@@ -107,17 +107,8 @@
 	"ui_config_general":{
 		"message":"Algemene"
 	},
-	"ui_config_shbmb":{
-		"message":"Toon\/Verberg bladwijzer balk"
-	},
 	"ui_config_shtlb":{
 		"message":"Laat de knoppen linksboven alleen in het zweef gebied"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Als deze optie is aangevinkt worden de knoppen linksboven uit de weg schuiven. Om ze weer te gebruiken, beweeg de muis over de plek waar de knoppen normaal zijn."
-	},
-	"ui_config_shgrid":{
-		"message":"Toon \/ Verberg Raster (wanneer ontrengeld)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Voor de <i>voorraad<\/i> Amezon snelkoppeling, selecteer je land."

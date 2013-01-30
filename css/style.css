@@ -79,6 +79,7 @@ body {
   height: 200px;
   overflow: hidden;
   display: block;
+  opacity: 0;
   -webkit-transition: opacity .2s ease-in-out;
 }
 .tile-grid {
@@ -255,7 +256,7 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
   z-index: 2;
 
   transition: all 150ms ease-in-out; /* for mouseover effect */
-  -webkit-transition: all 150ms ease-in-out;
+    -webkit-transition: all 150ms ease-in-out;
 }
 .app-name {
   position: absolute;
@@ -271,21 +272,24 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
   color: white;
 }
 .bubble {
+  font-family: Trebuchet, Arial, sans-serif;
   cursor: pointer;
   max-height: 35px;
   overflow: hidden;
   display: inline-block;
   padding: 10px;
-  background-color: #E2E1DF;
+  background-color: #A1A1A1;
+  color: white !important;
+  font-weight: bold;
   opacity: 1.0;
+  line-height: 10px;
+  font-size: 14px;
   transition: all 250ms ease-in-out; /* for mouseover effect */
     -webkit-transition: all 250ms ease-in-out;
-    -moz-transition: all 250ms ease-in-out;
-    -ms-transition: all 250ms ease-in-out;
-    -o-transition: all 250ms ease-in-out;
+  text-transform: uppercase;
 }
 .bubble:hover {
-  background-color: #C7C6BF;
+  background-color: #C2C2C2;
   opacity: 0.9;
 }
 #recently-closed-tabs-menu {
@@ -492,6 +496,10 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
 }
 
 /* UI-2 */
+.option-container {
+  max-width: 80%;
+}
+
 .ui-2 h3 {
   margin-bottom: 0;
   margin-top: 5px;
@@ -646,12 +654,6 @@ body.offline #widget-holder .app:not(.shortcut):not(.offline-enabled) {
   position: absolute;
   left: 55px;
   top: 185px;
-  width: 325px;
-}
-.ui-2#about-flattr {
-  position: absolute;
-  left: 55px;
-  top: 330px;
   width: 325px;
 }
 .ui-2#about-rate {
@@ -938,6 +940,12 @@ body > .widget-drawer-app img {
 }
 
 
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
 .ilb {
   display: inline-block;
 }
@@ -946,6 +954,9 @@ body > .widget-drawer-app img {
 }
 .opacity-0 {
   opacity: 0;
+}
+.overflow-auto {
+  overflow: auto;
 }
 
 /**
@@ -1125,3 +1136,79 @@ body > .widget-drawer-app img {
   .nav > li > a {
     display: block;
   }
+
+/**
+ * On/Off boxes
+ */
+   .onoffswitch {
+    position: relative; width: 100px;
+    float: right;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+  }
+
+  .onoffswitch-checkbox {
+    display: none;
+  }
+
+  .onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 0px solid #999999; border-radius: 0px;
+  }
+
+  .onoffswitch-inner {
+    width: 200%; margin-left: -100%;
+    -webkit-transition: margin 0.3s ease-in 0s;
+  }
+
+  .onoffswitch-inner > div {
+    float: left; position: relative; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -webkit-box-sizing: border-box; box-sizing: border-box;
+  }
+
+  .onoffswitch-inner .onoffswitch-active {
+    padding-left: 15px;
+    background-color: #C2C2C2; color: #FFFFFF;
+  }
+
+  .onoffswitch-inner .onoffswitch-inactive {
+    padding-right: 15px;
+    background-color: #C2C2C2; color: #FFFFFF;
+    text-align: right;
+  }
+
+  .onoffswitch-switch {
+    width: 40px; margin: 0px; text-align: center;
+    border: 0px solid #999999;border-radius: 0px;
+    position: absolute; top: 0; bottom: 0;
+  }
+  .onoffswitch-active .onoffswitch-switch {
+    background: #27A1CA; left: 0;
+  }
+  .onoffswitch-inactive .onoffswitch-switch {
+    background: #A1A1A1; right: 0;
+  }
+
+  .onoffswitch-active .onoffswitch-switch:before {
+    content: " "; position: absolute; top: 0; left: 40px;
+    border-style: solid; border-color: #27A1CA transparent transparent #27A1CA; border-width: 15px 10px;
+  }
+
+  .onoffswitch-inactive .onoffswitch-switch:before {
+    content: " "; position: absolute; top: 0; right: 40px;
+    border-style: solid; border-color: transparent #A1A1A1 #A1A1A1 transparent; border-width: 15px 10px;
+  }
+
+  .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+  }
+
+/**
+ * Advanced Options Input Boxes
+ */
+ .advanced-input {
+  width: 96px !important;
+  height: 26px;
+  font-size: 25px;
+  outline: none;
+ }

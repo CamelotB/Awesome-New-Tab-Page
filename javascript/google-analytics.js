@@ -4,13 +4,13 @@ _gaq.push([ '_trackPageview' ]);
 
 /* Non-Personal Statistics */
 _gaq.push([ '_trackEvent', 'Version', chrome.app.getDetails().version ]);
-if(localStorage.getItem("showbmb") !== null) {
-  _gaq.push([ '_trackEvent', 'Bookmark Bar', localStorage.getItem("showbmb") ]);
+if(preference.get("showbmb") !== null) {
+  _gaq.push([ '_trackEvent', 'Bookmark Bar', preference.get("showbmb") ]);
 }
-if(localStorage.getItem("perm-grid") !== null) {
-  _gaq.push([ '_trackEvent', 'Permanent Grid', localStorage.getItem("perm-grid") ]);
+if(preference.get("perm-grid") !== null) {
+  _gaq.push([ '_trackEvent', 'Permanent Grid', preference.get("perm-grid") ]);
 }
-if(localStorage.getItem("bg-img-css") !== null && localStorage.getItem("bg-img-css") !== "") {
+if(preference.get("bg-img-css") !== null && preference.get("bg-img-css") !== "") {
   _gaq.push([ '_trackEvent', 'Custom Background', "Yes" ]);
 } else {
   _gaq.push([ '_trackEvent', 'Custom Background', "No" ]);

@@ -84,6 +84,16 @@ var
           tile.css.top    = tile.where[0] * ( GRID_TILE_SIZE + ( GRID_TILE_PADDING * 2 ) ) + ( GRID_TILE_PADDING * 2 );
           tile.css.left   = tile.where[1] * ( GRID_TILE_SIZE + ( GRID_TILE_PADDING * 2 ) ) + ( GRID_TILE_PADDING * 2 );
 
+          if ( parseInt(preference.get("grid-height")) % 1 === 0 ) {
+            if ( (parseInt(tile.where[0]) + parseInt(tile.size[0])) > parseInt(preference.get("grid-height")) )
+              return;
+          }
+
+          if ( parseInt(preference.get("grid-width")) % 1 === 0 ) {
+            if ( (parseInt(tile.where[1]) + parseInt(tile.size[1])) > parseInt(preference.get("grid-width")) )
+              return;
+          }
+
           if ( tile.type === "app" || tile.type === "shortcut" ) {
             if ( tile.shortcut_background_transparent === true ) {
               tile.css.bg = "background-image: url("+tile.img+"); background-color: transparent;";
@@ -611,7 +621,7 @@ var
           });
           pane.selected = true;
 
-          if(pane.selected === true && pane.name === "Background") {
+          if(pane.selected === true && pane.name === chrome.i18n.getMessage("ui_config_bg")) {
             $("#icon-resize-scale-controls").show();
           } else {
             $("#icon-resize-scale-controls").hide();
@@ -652,3 +662,29 @@ var
   });
 
   /* END :: Tabs & Panes Directives */
+
+/* START :: Checkbox Directive */
+
+  ajs.directive('onoff', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: { name: '@' },
+      template:
+        '<div>' +
+          '<div class="onoffswitch">' +
+            '<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="{{name}}">' +
+            '<label class="onoffswitch-label" for="{{name}}">' +
+              '<div class="onoffswitch-inner">' +
+                '<div class="onoffswitch-active"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_on") + '</div></div>' +
+                '<div class="onoffswitch-inactive"><div class="onoffswitch-switch">' + chrome.i18n.getMessage("ui_config_onoff_off") + '</div></div>' +
+              '</div>' +
+            '</label>' +
+          '</div>' +
+        '</div>',
+      replace: true
+    };
+  });
+
+  /* END :: Checkbox Directive */
+

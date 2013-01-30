@@ -86,12 +86,6 @@
 	"ui_config_general":{
 		"message":"Obecn\u00e9"
 	},
-	"ui_config_shbmb":{
-		"message":"Zobrazit \/ Skr\u00fdt panel z\u00e1lo\u017eek"
-	},
-	"ui_config_shgrid":{
-		"message":"Zobrazit \/ Skr\u00fdt m\u0159\u00ed\u017eku (p\u0159i odem\u010den\u00ed)"
-	},
 	"ui_config_reset":{
 		"message":"Obnovit"
 	},

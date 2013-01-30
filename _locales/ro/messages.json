@@ -68,14 +68,8 @@
 	"ui_config_general":{
 		"message":"Generale"
 	},
-	"ui_config_shbmb":{
-		"message":"Afi\u015feaz\u0103\/Ascunde bara de marcaje"
-	},
 	"ui_config_shtlb":{
 		"message":"Arat\u0103 butoanele din partea st\u00e2nga-sus numai atunci c\u00e2nd se trece cursorul peste ele"
-	},
-	"ui_config_shgrid":{
-		"message":"Af\u015feaz\u0103\/Ascunde Grila (c\u00e2nd este deblocat)"
 	},
 	"ui_config_reset":{
 		"message":"Resetare"

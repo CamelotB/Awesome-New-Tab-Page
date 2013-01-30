@@ -107,17 +107,8 @@
 	"ui_config_general":{
 		"message":"Splo\u0161no"
 	},
-	"ui_config_shbmb":{
-		"message":"Poka\u017ei \/ skrij vrstico zaznamkov"
-	},
 	"ui_config_shtlb":{
 		"message":"Poka\u017ei gumbe levo zgoraj samo ob premiku v obmo\u010dje"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Ko je ta mo\u017enost vklopljena, bodo gumbi levo zgoraj zdrsnili stran. Za dostop do njih preprosto postavite mi\u0161ko tja kjer so obi\u010dajno."
-	},
-	"ui_config_shgrid":{
-		"message":"Poka\u017ei \/ Skrij mre\u017eo (ko je odklenjeno)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"Pri <i>privzeti<\/i> bli\u017enjici za Amazon izberite svojo dr\u017eavo."

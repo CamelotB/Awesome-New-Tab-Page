@@ -119,14 +119,8 @@
 	"ui_config_general":{
 		"message":"General"
 	},
-	"ui_config_shbmb":{
-		"message":"Mostra\/Amaga la barra d'adreces d'inter\u00e8s"
-	},
 	"ui_config_shtlb":{
 		"message":"Mostra els botons de l'esquerra superior nom\u00e9s a l'area flotant"
-	},
-	"ui_config_shgrid":{
-		"message":"Mostra \/ Amaga la quadr\u00edcula (quan esta desbloquejat)"
 	},
 	"ui_config_reset":{
 		"message":"Restablir"

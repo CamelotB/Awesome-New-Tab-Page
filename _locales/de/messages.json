@@ -119,17 +119,8 @@
 	"ui_config_general":{
 		"message":"Allgemeines"
 	},
-	"ui_config_shbmb":{
-		"message":"Lesezeichen anzeigen\/verbergen"
-	},
 	"ui_config_shtlb":{
 		"message":"Obere Schaltfl\u00e4che nur anzeigen, wenn ich mit der Maus dar\u00fcber fahre"
-	},
-	"ui_config_shtlb_desc":{
-		"message":"Wenn diese Option ausgew\u00e4hlt ist, werden die Schaltfl\u00e4chen an der Seite verschwinden. Um sie wieder sehen zu k\u00f6nnen, fahren Sie einfach mit der Maus \u00fcber diese Stelle."
-	},
-	"ui_config_shgrid":{
-		"message":"Raster anzeigen\/verbergen (wenn freigegeben)"
 	},
 	"ui_config_amazonlocale":{
 		"message":"W\u00e4hlen Sie ihr Land f\u00fcr die Amazon-<i>Lager<\/i>-Verkn\u00fcpfung."
