@@ -154,13 +154,6 @@ hr {
   left: 55px;
 }
 
-.flattr-left {
-  position: absolute;
-  top: 240px;
-  left: 36px;
-  z-index: 100;
-}
-
 .twitter-right {
   z-index: 100;
   position: absolute;
