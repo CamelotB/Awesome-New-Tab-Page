@@ -174,6 +174,24 @@
   "ui_config_hide_scrollbar_tip": {
     "message": "Hides the scrollbar at the bottom of the page."
   },
+  "ui_config_advanced": {
+    "message": "Advanced"
+  },
+  "ui_config_advanced_tip": {
+    "message": "Below are advanced options that, if used improperly, can lead to a degraded user experience. Use the following options at your own risk."
+  },
+  "ui_config_advanced_grid_width": {
+    "message": "Set Grid Width"
+  },
+  "ui_config_advanced_grid_width_tip": {
+    "message": "Overrides automatic grid generation. Using this setting may result in your tiles not being loaded. Setting this value too large may impact performance. Min: 4. Max: 50. <b>Erase number to disable!</b> Reload the page to apply."
+  },
+  "ui_config_advanced_grid_height": {
+    "message": "Set Grid Height"
+  },
+  "ui_config_advanced_grid_height_tip": {
+    "message": "Overrides automatic grid generation. Using this setting may result in your tiles not being loaded. Setting this value too large may impact performance. Min: 3. Max: 25. <b>Erase number to disable!</b> Reload the page to apply."
+  },
   "ui_about": {
     "message": "About"
   },

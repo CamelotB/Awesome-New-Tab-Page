@@ -369,10 +369,9 @@
             </div>
           </pane>
 
-          <pane name="Advanced">
+          <pane name="{{'ui_config_advanced' | i18n}}">
             <p>
-              Below are advanced options that, if used improperly, can lead to a degraded user experience.
-              Use the following options at your own risk.
+              {{'ui_config_advanced_tip' | i18n}}
             </p>
             <div class="overflow-auto">
               <div class="float-left option-container">
@@ -384,22 +383,18 @@
 
             <div class="overflow-auto">
               <div class="float-left option-container">
-                <b>Set Grid Width</b>
-                <p class="tip">Overrides automatic grid generation. Using this setting may result in your tiles not being loaded.
-                  Setting this value too large may impact performance. Min: 4. Max: 50. <b>Erase number to disable!</b>
-                  Reload the page to apply.</p>
+                <b>{{'ui_config_advanced_grid_width' | i18n}}</b>
+                <p class="tip"><i18n message-id="ui_config_advanced_grid_width_tip" /></p>
               </div>
-              <input type="number" id="grid-width" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="4" max="50" placeholder="OFF" />
+              <input type="number" id="grid-width" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="4" max="50" placeholder="{{'ui_config_onoff_off' | i18n}}" />
             </div>
 
             <div class="overflow-auto">
               <div class="float-left option-container">
-                <b>Set Grid Height</b>
-                <p class="tip">Overrides automatic grid generation. Using this setting may result in your tiles not being loaded.
-                  Setting this value too large may impact performance. Min: 3. Max: 25. <b>Erase number to disable!</b>
-                  Reload the page to apply.</p>
+                <b>{{'ui_config_advanced_grid_height' | i18n}}</b>
+                <p class="tip"><i18n message-id="ui_config_advanced_grid_height_tip" /></p>
               </div>
-              <input type="number" id="grid-height" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="3" max="25" placeholder="OFF" />
+              <input type="number" id="grid-height" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="3" max="25" placeholder="{{'ui_config_onoff_off' | i18n}}" />
             </div>
           </pane>
         </tabs>
