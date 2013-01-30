@@ -370,12 +370,36 @@
           </pane>
 
           <pane name="Advanced">
-            <div>
-              <div class="float-left">
+            <p>
+              Below are advanced options that, if used improperly, can lead to a degraded user experience.
+              Use the following options at your own risk.
+            </p>
+            <div class="overflow-auto">
+              <div class="float-left option-container">
                 <b>{{'ui_config_hide_scrollbar' | i18n}}</b>
                 <p class="tip">{{'ui_config_hide_scrollbar_tip' | i18n}}</p>
               </div>
               <onoff name="hide-scrollbar" />
+            </div>
+
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>Set Grid Width</b>
+                <p class="tip">Overrides automatic grid generation. Using this setting may result in your tiles not being loaded.
+                  Setting this value too large may impact performance. Min: 4. Max: 50. <b>Erase number to disable!</b>
+                  Reload the page to apply.</p>
+              </div>
+              <input type="number" id="grid-width" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="4" max="50" placeholder="OFF" />
+            </div>
+
+            <div class="overflow-auto">
+              <div class="float-left option-container">
+                <b>Set Grid Height</b>
+                <p class="tip">Overrides automatic grid generation. Using this setting may result in your tiles not being loaded.
+                  Setting this value too large may impact performance. Min: 3. Max: 25. <b>Erase number to disable!</b>
+                  Reload the page to apply.</p>
+              </div>
+              <input type="number" id="grid-height" class="float-right advanced-input" autocomplete="off" spellcheck="false" min="3" max="25" placeholder="OFF" />
             </div>
           </pane>
         </tabs>

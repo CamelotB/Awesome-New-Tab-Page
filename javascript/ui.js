@@ -277,6 +277,36 @@
     }
   });
 
+  $(window).bind("antp-config-first-open", function() {
+    var
+      gridwidth = preference.get("grid-width"),
+      gridheight = preference.get("grid-height");
+
+    $("#grid-width").val(gridwidth);
+    $("#grid-height").val(gridheight);
+    $(document).on("change", "#grid-width, #grid-height", updateGridSize);
+  });
+
+  function updateGridSize(e) {
+    if ( e ) {
+      var value = $(this).val();
+
+      if ($(this).attr("id") === "grid-width") {
+        value  = (value < 4) ? 4 : value;
+        value  = (value > 50) ? 50 : value;
+        $(this).val(value);
+      }
+
+      if ($(this).attr("id") === "grid-height") {
+        value  = (value < 3) ? 2 : value;
+        value  = (value > 25) ? 25 : value;
+        $(this).val(value);
+      }
+
+      preference.set($(this).attr("id"), $(this).val());
+    }
+  }
+
   /* END :: Configure */
 
 /* START :: Hide Scrollbar */

@@ -1209,3 +1209,12 @@ body > .widget-drawer-app img {
     margin-left: 0;
   }
 
+/**
+ * Advanced Options Input Boxes
+ */
+ .advanced-input {
+  width: 96px !important;
+  height: 26px;
+  font-size: 25px;
+  outline: none;
+ }

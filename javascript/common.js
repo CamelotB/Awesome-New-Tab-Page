@@ -382,8 +382,8 @@ function _e(_eNum) {
       var value = localStorage.getItem(key);
 
       if ( !value && DEFAULTS[key] ) {
-        localStorage.setItem(key, defaultValue);
-        return defaultValue;
+        localStorage.setItem(key, DEFAULTS[key]);
+        return DEFAULTS[key];
       }
 
       var yesorno = {

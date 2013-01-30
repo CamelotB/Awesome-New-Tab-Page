@@ -129,7 +129,7 @@ function placeGrid() {
   var placed_height = 0, placed_width = 0;
 
   // Ensure all placed widgets have a grid tile to land on
-  if( typeof(widgets) === "object" ) {
+  if ( typeof(widgets) === "object" ) {
     $.each(widgets, function(id, widget) {
       if( parseFloat(widget.where[0]) + parseFloat(widget.size[0]) > placed_height ) {
         placed_height = parseFloat(widget.where[0]) + parseFloat(widget.size[0]);
@@ -146,6 +146,12 @@ function placeGrid() {
       width = placed_width;
     }
   }
+
+  if ( parseInt(preference.get("grid-width")) % 1 === 0 )
+    width  = (width < 4) ? 4 : parseInt(preference.get("grid-width"));
+
+  if ( parseInt(preference.get("grid-height")) % 1 === 0 )
+    height  = (height < 3) ? 3 : parseInt(preference.get("grid-height"));
 
   // For performance reasons, never allow the grid to get excessively
   // wide / tall, no matter what the reason

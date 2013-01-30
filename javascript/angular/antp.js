@@ -84,6 +84,16 @@ var
           tile.css.top    = tile.where[0] * ( GRID_TILE_SIZE + ( GRID_TILE_PADDING * 2 ) ) + ( GRID_TILE_PADDING * 2 );
           tile.css.left   = tile.where[1] * ( GRID_TILE_SIZE + ( GRID_TILE_PADDING * 2 ) ) + ( GRID_TILE_PADDING * 2 );
 
+          if ( parseInt(preference.get("grid-height")) % 1 === 0 ) {
+            if ( (parseInt(tile.where[0]) + parseInt(tile.size[0])) > parseInt(preference.get("grid-height")) )
+              return;
+          }
+
+          if ( parseInt(preference.get("grid-width")) % 1 === 0 ) {
+            if ( (parseInt(tile.where[1]) + parseInt(tile.size[1])) > parseInt(preference.get("grid-width")) )
+              return;
+          }
+
           if ( tile.type === "app" || tile.type === "shortcut" ) {
             if ( tile.shortcut_background_transparent === true ) {
               tile.css.bg = "background-image: url("+tile.img+"); background-color: transparent;";
