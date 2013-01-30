@@ -291,6 +291,11 @@
     if ( e ) {
       var value = $(this).val();
 
+      if ( value === "" ) {
+        preference.set($(this).attr("id"), null);
+        return;
+      }
+
       if ($(this).attr("id") === "grid-width") {
         value  = (value < 4) ? 4 : value;
         value  = (value > 50) ? 50 : value;
@@ -298,7 +303,7 @@
       }
 
       if ($(this).attr("id") === "grid-height") {
-        value  = (value < 3) ? 2 : value;
+        value  = (value < 3) ? 3 : value;
         value  = (value > 25) ? 25 : value;
         $(this).val(value);
       }

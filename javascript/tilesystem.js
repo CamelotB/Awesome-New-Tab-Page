@@ -148,10 +148,10 @@ function placeGrid() {
   }
 
   if ( parseInt(preference.get("grid-width")) % 1 === 0 )
-    width  = (width < 4) ? 4 : parseInt(preference.get("grid-width"));
+    width  = (parseInt(preference.get("grid-width")) < 4) ? 4 : parseInt(preference.get("grid-width"));
 
   if ( parseInt(preference.get("grid-height")) % 1 === 0 )
-    height  = (height < 3) ? 3 : parseInt(preference.get("grid-height"));
+    height  = (parseInt(preference.get("grid-height")) < 3) ? 3 : parseInt(preference.get("grid-height"));
 
   // For performance reasons, never allow the grid to get excessively
   // wide / tall, no matter what the reason

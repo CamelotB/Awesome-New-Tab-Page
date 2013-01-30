@@ -400,6 +400,11 @@ function _e(_eNum) {
       return value;
     },
     set: function(key, value) {
+      if ( value === null ) {
+        localStorage.removeItem(key);
+        return;
+      }
+
       localStorage.setItem(key, value);
     }
   };
