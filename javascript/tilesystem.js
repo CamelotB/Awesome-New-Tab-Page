@@ -16,50 +16,38 @@
   *       relationship with the authors of this project or the project itself.
 ***/
 
-/* Online/Offline status */
-if (!navigator.onLine) {
-  $("body").addClass("offline");
-}
+/* START :: Online/Offline status */
 
-$(document).bind("online", function () {
-  $("body").removeClass("offline");
-});
-$(document).bind("onffline", function () {
-  $("body").addClass("offline");
-});
-/* End: Online/Offline status */
+  if (!navigator.onLine) {
+    $("body").addClass("offline");
+  }
+
+  $(document).bind("online", function () {
+    $("body").removeClass("offline");
+  });
+  $(document).bind("onffline", function () {
+    $("body").addClass("offline");
+  });
+
+  /* END :: Online/Offline status */
 
 /* START :: Show/Hide Grid */
 
-  var hideGridOptionsInit = false;
-  $(window).bind("antp-config", function() {
-    var hideGrid = $("#toggle-grid");
-    var yesno = localStorage.getItem("perm-grid") === "yes" ? "checked" : "";
+  $(window).bind("antp-config-first-open", function() {
+    var option = preference.get("perm-grid");
 
-    if(localStorage.getItem("perm-grid") === null) {
-      localStorage.setItem("perm-grid", "yes");
-    }
-
-    if(localStorage.getItem("perm-grid") === "yes") {
-      $("body").addClass("perm-grid");
-      hideGrid.attr("checked", yesno);
-    }
-
-    if ( hideGridOptionsInit === false ) {
-      hideGridOptionsInit = true;
-      $(document).on("change", "#toggle-grid", updateGridOpacity);
-    }
+    $("#toggle-grid").attr("checked", option);
+    $(document).on("change", "#toggle-grid", updateGridOpacity);
   });
 
-  function updateGridOpacity() {
-    if (localStorage.getItem("perm-grid") === "no") {
+  function updateGridOpacity(e) {
+    if ( e )
+      preference.set("perm-grid", $(this).is(":checked"));
+
+    if ( preference.get("perm-grid") ) {
       $("body").addClass("perm-grid");
-      localStorage.setItem("perm-grid", "yes");
-      $(".tile").css({opacity: 0});
     } else {
       $("body").removeClass("perm-grid");
-      localStorage.setItem("perm-grid", "no");
-      $(".tile").css({opacity: 0});
     }
   }
 
@@ -73,8 +61,8 @@ $(document).ready(function($) {
 
 var GRID_MIN_HEIGHT     = 3,
     GRID_MIN_WIDTH      = 7,
-    GRID_MARGIN_TOP     = function(){ return localStorage.getItem("showbmb") === "yes" ? 27 : 0 },
-    GRID_MARGIN_LEFT    = function(){ return localStorage.getItem("hideLeftButtons") === "yes" ? 0 : 27},
+    GRID_MARGIN_TOP     = function(){ return preference.get("showbmb") ? 27 : 0 },
+    GRID_MARGIN_LEFT    = function(){ return preference.get("hideLeftButtons") ? 0 : 27 },
     GRID_TILE_SIZE      = 200,  // NEVER CHANGE
     GRID_TILE_PADDING   = 3,    // NEVER CHANGE
 
@@ -807,7 +795,7 @@ function setStuff() {
           $(".ui-2#apps .drawer-app .url").removeClass("url").addClass("disabled-url");
         }, 1100);
 
-        if ( localStorage.getItem("hideLeftButtons") === "yes" ) {
+        if ( preference.get("hideLeftButtons") ) {
           $(".side-button").css("left", "0px");
           $("#widget-holder,#grid-holder").css("left", "27px");
         }
@@ -834,7 +822,7 @@ function setStuff() {
     /* END :: Lock */
 
 
-  /* Start :: Tile-Editor UI Interaction */
+  /* START :: Tile-Editor UI Interaction */
   $(document).on("click", "#delete", function(){
     var self = this;
     required('/javascript/tile-editor.js?nocache=12', function() {
@@ -854,7 +842,7 @@ function setStuff() {
     e.stopPropagation();
     e.preventDefault();
   });
-  /* End :: Tile-Editor UI Interaction */
+  /* END :: Tile-Editor UI Interaction */
 
 
 // Add widget to localStorage then refresh

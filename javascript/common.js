@@ -368,3 +368,40 @@ function _e(_eNum) {
   });
 
   /* URL Handler :: End */
+
+/* START :: Preferences */
+
+  var DEFAULTS = { // uses localStorage keys
+    "perm-grid": true,
+    "hideScrollbar": false,
+    "hideLeftButtons": false,
+  };
+
+  var preference = {
+    get: function(key) {
+      var value = localStorage.getItem(key);
+
+      if ( !value && DEFAULTS[key] ) {
+        localStorage.setItem(key, defaultValue);
+        return defaultValue;
+      }
+
+      var yesorno = {
+        "yes": true,
+        "no": false,
+        "true": true,
+        "false": false
+      }
+
+      if ( typeof yesorno[value] === "boolean" ) {
+        return yesorno[value];
+      }
+
+      return value;
+    },
+    set: function(key, value) {
+      localStorage.setItem(key, value);
+    }
+  };
+
+  /* END :: Preferences */
