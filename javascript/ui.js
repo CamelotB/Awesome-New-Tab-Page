@@ -114,6 +114,14 @@
         po.src = 'https://apis.google.com/js/plusone.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
       })();
+
+      (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'https://chrome.google.com/webstore/widget/developer/scripts/widget.js';
+        t.parentNode.insertBefore(s, t);
+      })();
     }
   });
 

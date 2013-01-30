@@ -41,5 +41,5 @@
     "/widgets/notepad/widget.notepad.html"
   ],
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' https://apis.google.com https://ssl.google-analytics.com https://platform.twitter.com https://api.flattr.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://apis.google.com https://ssl.google-analytics.com https://platform.twitter.com https://api.flattr.com https://chrome.google.com; object-src 'self'"
 }
