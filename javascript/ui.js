@@ -421,7 +421,7 @@ function showAppsWindow () {
           event: 'unfocus'
         },
         style: {
-          classes: 'ui-tooltip-bootstrap ui-tooltip-shadow'
+          classes: 'ui-tooltip-light ui-tooltip-bootstrap ui-tooltip-shadow'
         }
       });
 
