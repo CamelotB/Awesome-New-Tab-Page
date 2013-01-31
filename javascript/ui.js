@@ -419,6 +419,9 @@ function showAppsWindow () {
         },
         hide: {
           event: 'unfocus'
+        },
+        style: {
+          classes: 'ui-tooltip-bootstrap ui-tooltip-shadow'
         }
       });
 
