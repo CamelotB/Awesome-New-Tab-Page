@@ -13,6 +13,9 @@
   function scrollHorizontal(event) {
     var delta = 0;
 
+    if ( preference.get("disableHscroll") )
+      return;
+
     if ( !event )
       event = window.event;
 
@@ -42,5 +45,21 @@
     event.returnValue = false;
   }
   $(document).live("mousewheel", scrollHorizontal);
+
+  /* START :: Options Window */
+
+    $(window).bind("antp-config-first-open", function() {
+      var option = preference.get("disableHscroll");
+
+      $("#disableHscroll").attr("checked", option);
+      $(document).on("change", "#disableHscroll", disableHorizontalScrolling);
+    });
+
+    function disableHorizontalScrolling(e) {
+      if ( e )
+        preference.set("disableHscroll", $(this).is(":checked"));
+    }
+
+    /* END :: Options Window */
 
   /* END :: Horizontal Scrolling */

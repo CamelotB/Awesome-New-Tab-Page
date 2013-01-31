@@ -372,9 +372,10 @@ function _e(_eNum) {
 /* START :: Preferences */
 
   var DEFAULTS = { // uses localStorage keys
-    "perm-grid": true,
-    "hideScrollbar": false,
-    "hideLeftButtons": false,
+    "perm-grid":        true,
+    "hideScrollbar":    false,
+    "hideLeftButtons":  false,
+    "disableHscroll":   false,
   };
 
   var preference = {
